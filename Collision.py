@@ -5,14 +5,14 @@ import FreeCAD
 
 from say import *
 
-__dir__ = os.path.dirname(__file__)	
+__dir__ = os.path.dirname(__file__)
 
 #-----------------------------------------
 
 #--------------------------------------------
 
 def col(actor,obstacles):
-	
+
 	av=actor.Shape.BoundBox
 	for obl in obstacles:
 		ov=obl.Shape.BoundBox
@@ -20,7 +20,7 @@ def col(actor,obstacles):
 			print(obl.Label)
 			obl.ViewObject.DiffuseColor=(1.0,0.0,0.0)
 		else:
-			obl.ViewObject.DiffuseColor=(1.0,1.0,0.0)  
+			obl.ViewObject.DiffuseColor=(1.0,1.0,0.0)
 
 #--------------------------------------------
 
@@ -41,19 +41,19 @@ def sayexc(mess=''):
 	FreeCAD.Console.PrintError(mess + "\n" +"-->  ".join(l2))
 
 class _ViewProvider(object):
- 
+
 	def getIcon(self):
-		
+
 		return  __dir__ + '/icons/collider.png'
-   
+
 	def __init__(self,vobj):
 		vobj.Proxy = self
 
 
 	def attach(self,vobj):
 		self.Object = vobj.Object
-		return	
-	
+		return
+
 	def claimChildren(self):
 		return self.Object.Group
 
@@ -123,10 +123,10 @@ class Detector():
 		#say(obj.Label)
 		#say(obj.ViewObject.Visibility)
 		try: self.Lock
-		except: 
+		except:
 			self.Lock= False
 			self.obj2=obj
-		
+
 		if not obj.ViewObject.Visibility: return
 		if not self.Lock:
 			self.Lock=True
@@ -150,7 +150,7 @@ class Detector():
 			#print poipair
 			pass
 
-		# process only one near point 
+		# process only one near point
 		p1=poipair[0]
 		p2=poipair[1]
 
@@ -179,7 +179,7 @@ class Detector():
 			if obj.hidemode == 1:
 				obj.comm.ViewObject.Visibility=True
 				obj.offs.ViewObject.Visibility=True
-				
+
 				obj.s3.ViewObject.Visibility=False
 				obj.s1.ViewObject.Visibility=False
 				obj.s2.ViewObject.Visibility=False
@@ -211,7 +211,7 @@ def createCollision(name='MyCollisionDetector',stator=None,traveller=None):
 	obj.addProperty("App::PropertyFloat","near1","Base","nearDistance ").near1=10
 	obj.addProperty("App::PropertyFloat","near2","Base","nearDistance green").near2=5
 	obj.addProperty("App::PropertyFloat","offset","Base","Tickness of the Colliosion offset").offset=1
-	
+
 	obj.addProperty("App::PropertyLink","s1","helper","s1")
 	obj.addProperty("App::PropertyLink","s2","helper","s2")
 	obj.addProperty("App::PropertyLink","s3","helper","s3")
@@ -219,10 +219,10 @@ def createCollision(name='MyCollisionDetector',stator=None,traveller=None):
 	obj.addProperty("App::PropertyLink","offs","helper","offset")
 	obj.addProperty("App::PropertyInteger","mode","helper","1 only common, 2 additive commons ").mode=1
 	obj.addProperty("App::PropertyInteger","hidemode","helper","1 auto, 2 off").hidemode=1
-	
+
 	_ViewProvider(obj.ViewObject)
 	t=Detector(obj)
-	
+
 	return t
 
 

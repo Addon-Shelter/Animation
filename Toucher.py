@@ -7,7 +7,7 @@ import Animation
 import os
 
 __vers__= '0.2'
-__dir__ = os.path.dirname(__file__)	
+__dir__ = os.path.dirname(__file__)
 
 
 #---------------------------------------------------------------

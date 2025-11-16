@@ -1,13 +1,7 @@
 # SPDX-License-Identifier: LGPL-2.1-or-later
+# SPDX-FileCopyrightText: 2016 microelly
 # SPDX-FileNotice: Part of the Animation addon.
 
-#-------------------------------------------------
-#-- animation workbench
-#--
-#-- microelly 2016 v 0.1
-#--
-#-- GNU Lesser General Public License (LGPL)
-#-------------------------------------------------
 from __future__ import unicode_literals
 
 __vers__="08.04.2016  0.4"

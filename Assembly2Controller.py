@@ -32,12 +32,12 @@ class _Assembly2Controller(Animation._Actor):
 			import assembly2solver
 			try:
 				constraintSystem = assembly2solver.solveConstraints(
-						FreeCAD.ActiveDocument, showFailureErrorDialog=False, 
+						FreeCAD.ActiveDocument, showFailureErrorDialog=False,
 						printErrors=self.obj2.printErrors)
 				if constraintSystem == None:
 					sayErr('Solver failed to satisfy specified constraints')
 				else:
-					say("Solver step done " + str(now)) 
+					say("Solver step done " + str(now))
 			except:
 				sayErr("problem assembly2solver.solveConstraints(App.ActiveDocument)")
 		except:

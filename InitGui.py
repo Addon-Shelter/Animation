@@ -1,28 +1,5 @@
-#***************************************************************************
-#*																		 *
-#*   Copyright (c) 2014, 2018												*  
-#*   <microelly2@freecadbuch.de>										   * 
-#*   this file is based on the code and the ideas						  *   
-#*   of the freecad arch module developed by Yorik van Havre			   *
-#*																		 *
-#*   This program is free software; you can redistribute it and/or modify  *
-#*   it under the terms of the GNU Lesser General Public License (LGPL)	*
-#*   as published by the Free Software Foundation; either version 2 of	 *
-#*   the License, or (at your option) any later version.				   *
-#*   for detail see the LICENCE text file.								 *
-#*																		 *
-#*   This program is distributed in the hope that it will be useful,	   *
-#*   but WITHOUT ANY WARRANTY; without even the implied warranty of		*
-#*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the		 *
-#*   GNU Library General Public License for more details.				  *
-#*																		 *
-#*   You should have received a copy of the GNU Library General Public	 *
-#*   License along with this program; if not, write to the Free Software   *
-#*   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  *
-#*   USA																   *
-#*																		 *
-#***************************************************************************
 # SPDX-License-Identifier: LGPL-2.1-or-later
+# SPDX-FileCopyrightText: 2014 , 2018 microelly
 # SPDX-FileNotice: Part of the Animation addon.
 
 #
@@ -53,8 +30,8 @@ class _CommandActor():
 		self.modul=modul
 #		say(self.icon)
 
-	def GetResources(self): 
-		return {'Pixmap' : self.icon, 'MenuText': self.name, 'ToolTip': self.name +' Dialog'} 
+	def GetResources(self):
+		return {'Pixmap' : self.icon, 'MenuText': self.name, 'ToolTip': self.name +' Dialog'}
 
 
 	def IsActive(self):
@@ -147,12 +124,12 @@ class _Command():
 		self.name=name
 
 
-	def GetResources(self): 
-		return {'Pixmap' : self.icon, 
-			'MenuText': self.name, 
-			'ToolTip': self.name, 
+	def GetResources(self):
+		return {'Pixmap' : self.icon,
+			'MenuText': self.name,
+			'ToolTip': self.name,
 			'CmdType': "ForEdit" # bleibt aktiv, wenn sketch editor oder andere tasktab an ist
-		} 
+		}
 
 	def IsActive(self):
 		if FreeCADGui.ActiveDocument: return True
@@ -215,7 +192,7 @@ def onselex1():
 # the menu entry list
 FreeCAD.tcmds6=[]
 
-# create menu entries 
+# create menu entries
 '''
 def c1(menu,name,*info):
 	global _Command
@@ -265,7 +242,7 @@ if FreeCAD.GuiUp:
 
 class AnimationWorkbench(Workbench):
 	'''Animation workbench object'''
-	
+
 	Icon = """
 /* XPM */
 static char * animation_xpm[] = {
@@ -414,7 +391,7 @@ static char * animation_xpm[] = {
 	def Initialize(self):
 #		import Animation
 #		import Scaler
-		
+
 		Gui.activateWorkbench("DraftWorkbench")
 		Gui.activateWorkbench("SketcherWorkbench")
 
@@ -427,15 +404,15 @@ static char * animation_xpm[] = {
 
 		self.animtools=[
 				"Anim_TA",
-				"Anim_Mover", 
+				"Anim_Mover",
 				"Anim_Rotator",
-				
+
 				"Anim_Tranquillizer",
 
 				"Anim_Photographer",
 				"Anim_Plugger",
 				"Anim_Adjuster",
-				
+
 				"Anim_Styler",
 				"Anim_Billboard",
 				"Anim_Moviescreen",
@@ -450,7 +427,7 @@ static char * animation_xpm[] = {
 				"Anim_Gearing",
 				"Anim_Kartan",
 				"Anim_Scaler",
-				
+
 #				"A_Starter",
 #				"A_Runner",
 #				"B1","B2",
@@ -483,29 +460,29 @@ static char * animation_xpm[] = {
 
 
 
-				
+
 						]
-						
-		self.actions = [	
+
+		self.actions = [
 			"ScriptAction",
 			"LoopAction",
 			"WhileAction","RepeatAction","FalseAction","TrueAction","CaseAction","QueryAction"
 		]
 
 		self.contextTools=["A_Runner","B1","B2","EditObject"]
-		
-		
-		
+
+
+
 		FreeCAD.t=self.appendToolbar("Functions",self.functiontools)
 		FreeCAD.t=self.appendToolbar("Animation",self.animtools)
 ##		FreeCAD.t=self.appendToolbar("ActionScript",self.actions)
-		
+
 		self.appendMenu('Functions',self.functiontools)
 		self.appendMenu('Animation',self.animtools)
 ##		self.appendMenu('Script Actions',self.actions)
 
 
-		# add the commands version 2018 
+		# add the commands version 2018
 		menues={}
 		ml=[]
 		for _t in FreeCAD.tcmds6:
@@ -513,7 +490,7 @@ static char * animation_xpm[] = {
 			a=_t[1]
 			try:menues[tuple(c)].append(a)
 
-			except: 
+			except:
 				menues[tuple(c)]=[a]
 				ml.append(tuple(c))
 
@@ -521,12 +498,12 @@ static char * animation_xpm[] = {
 			self.appendMenu(list(m),menues[m])
 
 
-		
+
 		Log ('Loading Animation Workbench ... done\n')
 
 	def Activated(self):
 		Msg("Animation workbench activated\n")
-				
+
 	def Deactivated(self):
 		Msg("Animation workbench deactivated\n")
 
@@ -537,7 +514,7 @@ static char * animation_xpm[] = {
 #		FreeCAD.yy=self
 		pass
 
-	def GetClassName(self): 
+	def GetClassName(self):
 		return "Gui::PythonWorkbench"
 
 
@@ -553,4 +530,4 @@ FreeCADGui.addWorkbench(AnimationWorkbench)
 
 
 
- 
+

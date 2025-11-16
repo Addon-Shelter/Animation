@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: LGPL-2.1-or-later
+# SPDX-FileCopyrightText: 2015 microelly
 # SPDX-FileNotice: Part of the Animation addon.
 
 import numpy as np
@@ -15,7 +16,7 @@ def force1(x,y,z,p,t=0):
 
 def force2(x,y,z,p,t=0):
 
-	# test force 
+	# test force
 	if t>70:
 		return (0,0,0)
 

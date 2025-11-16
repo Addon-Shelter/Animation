@@ -1,13 +1,6 @@
 # SPDX-License-Identifier: LGPL-2.1-or-later
+# SPDX-FileCopyrightText: 2015 microelly
 # SPDX-FileNotice: Part of the Animation addon.
-
-#-------------------------------------------------
-#-- animation workbench tracker
-#--
-#-- microelly 2015
-#--
-#-- GNU Lesser General Public License (LGPL)
-#-------------------------------------------------
 
 import FreeCAD,PySide,os,FreeCADGui
 from PySide import QtCore, QtGui, QtSvg

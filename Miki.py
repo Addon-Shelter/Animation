@@ -1,16 +1,8 @@
 # SPDX-License-Identifier: LGPL-2.1-or-later
+# SPDX-FileCopyrightText: 2016 microelly
 # SPDX-FileNotice: Part of the Animation addon.
 
-#-------------------------------------------------
-#-- miki - my kivy like creation tools
-#--
-#-- microelly 2016
-#--
-#-- GNU Lesser General Public License (LGPL)
-#-------------------------------------------------
-
-
-
+# miki - my kivy like creation tools
 
 def creatorFunction(name):
 	if name.startswith('Part::'):

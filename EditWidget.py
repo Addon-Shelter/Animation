@@ -1,13 +1,7 @@
 # SPDX-License-Identifier: LGPL-2.1-or-later
+# SPDX-FileCopyrightText: 2015 microelly
 # SPDX-FileNotice: Part of the Animation addon.
 
-#-------------------------------------------------
-#-- Animation workbench
-#--
-#-- microelly 2015
-#--
-#-- GNU Lesser General Public License (LGPL)
-#-------------------------------------------------
 from PySide import QtCore, QtGui
 from say import *
 

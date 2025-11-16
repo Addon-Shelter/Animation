@@ -7,7 +7,7 @@ from Animation import say,sayErr,sayexc
 import os
 
 __vers__= '0.2'
-__dir__ = os.path.dirname(__file__)	
+__dir__ = os.path.dirname(__file__)
 
 
 #---------------------------------------------------------------
@@ -25,7 +25,7 @@ class _Snapshot(Animation._Actor):
 		ss.ViewObject.ShapeColor=(1.0,0.0,0.0)
 		ss.ViewObject.Visibility=False
 		self.g.addObject(ss)
-	
+
 	def update(self):
 		pass
 
@@ -44,7 +44,7 @@ def createSnapshot(name='My_Snapshot',seqname='S',target=None,targets=[]):
 	obj.addProperty("App::PropertyLinkList","targets","Base","")
 	obj.addProperty("App::PropertyString","seqname","Base","").seqname=seqname
 	obj.target=target
-	if targets: 
+	if targets:
 		obj.targets=targets
 	_Snapshot(obj)
 	_ViewProviderSnapshot(obj.ViewObject)
@@ -62,7 +62,7 @@ class _ViewSequence(Animation._Actor):
 		if now==0:
 			sufi=''
 		else:
-			sufi=  "%03d" % (now) 
+			sufi=  "%03d" % (now)
 		if now > 0:
 			try:
 				ob=self.last
