@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #-------------------------------------------------
 #-- miki - my kivy like creation tools
 #--

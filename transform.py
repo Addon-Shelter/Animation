@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #-------------------------------------------------
 #-- Transform Node: Cascaded coordinate systems 
 #--
