@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: LGPL-2.1-or-later
+
 #-------------------------------------------------
 #-- animation workbench tracker
 #--
@@ -8,7 +10,7 @@
 
 import FreeCAD,PySide,os,FreeCADGui
 from PySide import QtCore, QtGui, QtSvg
-from PySide.QtGui import * 
+from PySide.QtGui import *
 import Part
 
 #----------
@@ -21,7 +23,7 @@ from Animation import say,sayErr,sayexc
 from  EditWidget import EditNoDialWidget
 
 __vers__='0.3 30.11.2015'
-__dir__ = os.path.dirname(__file__)	
+__dir__ = os.path.dirname(__file__)
 
 
 def createTracker(name="MyTracker",src=None,filename="/tmp/tracker"):
@@ -57,7 +59,7 @@ class _Tracker(Animation._Actor):
 
 
 class _ViewProviderTracker(Animation._ViewProviderActor):
- 
+
 	def getIcon(self):
 		return __dir__ +'/icons/icon2.svg'
 

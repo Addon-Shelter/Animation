@@ -1,5 +1,7 @@
+# SPDX-License-Identifier: LGPL-2.1-or-later
+
 #-------------------------------------------------
-#-- Transform Node: Cascaded coordinate systems 
+#-- Transform Node: Cascaded coordinate systems
 #--
 #-- (c) microelly 2015
 #--
@@ -8,7 +10,7 @@
 
 import FreeCAD,PySide,os,FreeCADGui
 from PySide import QtCore, QtGui, QtSvg
-from PySide.QtGui import * 
+from PySide.QtGui import *
 
 __vers__='0.2'
 
@@ -34,10 +36,10 @@ class TransformWidget(QtGui.QWidget):
 		self.vollabel = QtGui.QLabel(obj.Object.Label)
 
 		self.pushButton02 = QtGui.QPushButton()
-		self.pushButton02.clicked.connect(self.on_pushButton02_clicked) 
+		self.pushButton02.clicked.connect(self.on_pushButton02_clicked)
 		self.pushButton02.setText("close")
 
-		self.listWidget = QListWidget() 
+		self.listWidget = QListWidget()
 		for tn in self.obj2.Object._targets:
 			n=tn.Label
 			item = QListWidgetItem(n)
@@ -49,20 +51,20 @@ class TransformWidget(QtGui.QWidget):
 			self.combo.addItem(str(i.Label)+ " ")
 
 		self.pushButton03 = QtGui.QPushButton()
-		self.pushButton03.clicked.connect(self.on_pushButton03_clicked) 
+		self.pushButton03.clicked.connect(self.on_pushButton03_clicked)
 		self.pushButton03.setText("add target")
-		
+
 		self.pushButton04 = QtGui.QPushButton()
-		self.pushButton04.clicked.connect(self.on_pushButton04_clicked) 
+		self.pushButton04.clicked.connect(self.on_pushButton04_clicked)
 		self.pushButton04.setText("remove selected targets")
-		
+
 		layout = QtGui.QGridLayout()
 		layout.addWidget(self.vollabel, 0, 0)
-		
+
 		layout.addWidget(self.pushButton02, 15, 0,1,4)
 		layout.addWidget(self.listWidget, 3, 0,1,4)
 		layout.addWidget(self.pushButton04, 4, 0,1,4)
-		
+
 		layout.addWidget(self.combo, 5, 0,1,4)
 		layout.addWidget(self.pushButton03, 6, 0,1,4)
 
@@ -117,7 +119,7 @@ def createTransform(name='MyTransform', targets=[],src=None):
 	obj = FreeCAD.ActiveDocument.addObject("App::DocumentObjectGroupPython",name)
 	_Transform(obj)
 	_ViewProviderTransform(obj.ViewObject)
-	
+
 	c3=obj
 	c3.addProperty("App::PropertyStringList","execute3","2 MyCTL","")
 	c3.execute3=['say("hallo")']
@@ -137,7 +139,7 @@ def createTransform(name='MyTransform', targets=[],src=None):
 		c3.Placement=FreeCAD.Placement()
 	objlinks=[]
 	liste=[]
-	while objlinks.__len__() > 1: 
+	while objlinks.__len__() > 1:
 		key=objlinks.pop(0)
 		val=objlinks.pop(0)
 		say(key)
@@ -147,7 +149,7 @@ def createTransform(name='MyTransform', targets=[],src=None):
 		say(s)
 		exec(s)
 	propliste=[]
-	while liste.__len__() > 1: 
+	while liste.__len__() > 1:
 		key=liste.pop(0)
 		val=liste.pop(0)
 		say(key)
@@ -157,7 +159,7 @@ def createTransform(name='MyTransform', targets=[],src=None):
 		#say(val.__class__)
 		if val.__class__ == int:
 			c3.addProperty("App::PropertyInteger",key,"1 MyProps","")
-			s='c3.'+key + '=' + str(val) 
+			s='c3.'+key + '=' + str(val)
 			exec(s)
 		elif val.__class__ ==  str:
 			c3.addProperty("App::PropertyString",key,"1 MyProps","")
@@ -165,7 +167,7 @@ def createTransform(name='MyTransform', targets=[],src=None):
 			exec(s)
 		elif val.__class__ ==  float:
 			c3.addProperty("App::PropertyFloat",key,"1 MyProps","")
-			s='c3.'+key + '=' + str(val) 
+			s='c3.'+key + '=' + str(val)
 			#say(s)
 			exec(s)
 		else:
@@ -178,23 +180,23 @@ class _Transform():
 	def __init__(self,obj):
 		obj.Proxy = self
 		self.Type = "_Transform"
-		self.obj2 = obj 
+		self.obj2 = obj
 		self.Lock=False
 	def execute(self,obj):
 		if not self.Lock:
-			say("exec self=" +str(self) +' obj.Label= ' +str(obj.Label)) 
+			say("exec self=" +str(self) +' obj.Label= ' +str(obj.Label))
 			say("set Lock ----- " +str(obj.Label))
 			'''
 			try:
 				if not hasattr(self,"updater"):
 					say("erzeuge updater")
 					self.updater=True
-					
+
 				if self.updater:
 					self.updater=False
 					say("updater true!")
 					#return
-					# hack deaktiviert 
+					# hack deaktiviert
 				else:
 					self.updater=True
 			except:
@@ -213,7 +215,7 @@ class _Transform():
 			for target in self.obj2._targets:
 				palt=target.Placement
 				t=qai.multiply(palt)
-				pneu=qneu.multiply(t) 
+				pneu=qneu.multiply(t)
 				target.Placement=pneu
 				try:
 					target.Proxy.execute(target)
@@ -230,7 +232,7 @@ class _Transform():
 	def __setstate__(self,state):
 		say("setstate " + str(self) + str(state))
 		return None
-		
+
 	def addComponent(self,name='object'):
 		say(name)
 		self.obj2.addProperty("App::PropertyLink",name,"3 MyParts","")
@@ -242,7 +244,7 @@ class _Transform():
 		c3=self.obj2
 		if val.__class__ == int:
 			c3.addProperty("App::PropertyInteger",key,"1 MyProps","")
-			s='c3.'+key + '=' + str(val) 
+			s='c3.'+key + '=' + str(val)
 			exec(s)
 		elif val.__class__ ==  str:
 			c3.addProperty("App::PropertyString",key,"1 MyProps","")
@@ -250,7 +252,7 @@ class _Transform():
 			exec(s)
 		elif val.__class__ ==  float:
 			c3.addProperty("App::PropertyFloat",key,"1 MyProps","")
-			s='c3.'+key + '=' + str(val) 
+			s='c3.'+key + '=' + str(val)
 			#say(s)
 			exec(s)
 		else:
@@ -274,10 +276,10 @@ class _Transform():
 			self.beforeP=FreeCAD.Placement(obj.Placement)
 
 class _ViewProviderTransform(object):
- 
+
 	def getIcon(self):
 		return __dir__ +'/icons/sun.png'
-   
+
 	def __init__(self,vobj):
 		say("__init__" + str(self))
 		self.Object = vobj.Object
@@ -306,7 +308,7 @@ class _ViewProviderTransform(object):
 	def __setstate__(self,state):
 		say("setstate " + str(self) + str(state))
 		return None
-		
+
 	def setEdit(self,vobj,mode=0):
 		s=TransformWidget(self)
 		self.dialog=s
@@ -331,7 +333,7 @@ class _ViewProviderTransform(object):
 	def edit(self):
 		self.dialog=TransformWidget(self)
 		self.dialog.show()
-		
+
 
 	def showVersion(self):
 		QtGui.QMessageBox.information(None, "About Transform", "Transform Node\n2015 microelly\nVersion " + __vers__ +"\nstill very alpha")
@@ -368,12 +370,12 @@ class HingeWidget(QtGui.QWidget):
 		self.Object.Object.Placement.Rotation=FreeCAD.Rotation(self.Object.Object.axis,v)
 		saye(self.Object.Object.Placement.Rotation.Angle)
 		saye(self.Object.Object.Placement.Rotation.Axis)
-		
+
 		say(self.Object.Object.Placement)
 		self.Object.Object.Proxy.execute(t)
 		'''
 		#---------------------------------------------
-		
+
 		FreeCAD.tt=self
 #		say(self.Object.Object.Placement)
 		if True:
@@ -398,7 +400,7 @@ class HingeWidget(QtGui.QWidget):
 			qn2=FreeCAD.Placement(qn)
 			rest2=FreeCAD.Placement(rest)
 			say(qn2)
-			
+
 			say("qneu ... zz=")
 			#FreeCAD.rest=rest
 			#FreeCAD.qn=qn
@@ -407,13 +409,13 @@ class HingeWidget(QtGui.QWidget):
 			say("lokal berechnet:")
 			zz=rest.multiply(qn)
 			say(zz)
-			
+
 			self.Object.Object.axisAngle=v
 			self.Object.Object.Placement=zz
 			saye("fertig")
 			FreeCAD.ActiveDocument.recompute()
-		
-		
+
+
 		#----------------------------------------------
 		FreeCAD.ActiveDocument.recompute()
 
@@ -459,7 +461,7 @@ class TelescopWidget(QtGui.QWidget):
 			qn2=FreeCAD.Placement(qn)
 			rest2=FreeCAD.Placement(rest)
 			say(qn2)
-			
+
 			say("qneu ... zz=")
 			#FreeCAD.rest=rest
 			#FreeCAD.qn=qn
@@ -468,7 +470,7 @@ class TelescopWidget(QtGui.QWidget):
 			say("lokal berechnet:")
 			zz=rest.multiply(qn)
 			say(zz)
-			
+
 			self.Object.Object.axisScale=v
 			self.Object.Object.Placement=zz
 			saye("fertig")
@@ -487,7 +489,7 @@ class _ViewProviderHinge(_ViewProviderTransform):
 	def config(self):
 		self.dialog=HingeWidget(self)
 		# self.dialog.show()
-		
+
 		mw = FreeCADGui.getMainWindow()
 		dock = QtGui.QDockWidget(self.Object.Label, mw)
 		dock.setStyleSheet("background-color:lightblue;color:blue;")
@@ -510,7 +512,7 @@ class _ViewProviderTelescope(_ViewProviderTransform):
 
 	def getIcon(self):
 		return __dir__ +'/icons/mars.png'
- 
+
 	def setupContextMenu(self, obj, menu):
 #		action = menu.addAction("About Transform B")
 #		action.triggered.connect(self.showVersion)
@@ -566,13 +568,13 @@ App=FreeCAD
 
 def createVertexPlugger(name='VertexPlugger', src=None, target=None, point=0):
 	obj = FreeCAD.ActiveDocument.addObject("App::DocumentObjectGroupPython",name)
-	
+
 	c3=obj
-	
+
 
 	#c3.addProperty("App::PropertyLinkList","_targets","3 MyCTL","")
 	#c3._targets=targets
-	
+
 	c3.addProperty("App::PropertyLink","target","2 MyCTL","")
 	c3.target=target
 	c3.addProperty("App::PropertyLink","src","2 MyCTL","")
@@ -600,7 +602,7 @@ class _VertexPlugger():
 	def __init__(self,obj):
 		obj.Proxy = self
 		self.Type = "_Transform"
-		self.obj2 = obj 
+		self.obj2 = obj
 		self.Lock=False
 		self.Changed=False
 
@@ -612,7 +614,7 @@ class _VertexPlugger():
 			return
 		if not self.Lock:
 #			say("exec self=" +str(self))
-			
+
 			say("set Lock ----- " +str(obj.Label))
 			self.obj2=obj
 
@@ -628,22 +630,22 @@ class _VertexPlugger():
 	def update(self):
 		lastrefalt=FreeCAD.Placement()
 		lastrefalt.Base=self.obj2.refOld
-		
+
 		koopalt=FreeCAD.Placement(self.obj2.src.Placement)
 		refalt=FreeCAD.Vector(self.obj2.src.Shape.Vertexes[self.obj2.point].Point)
-		
+
 		refalt2=FreeCAD.Placement()
 		refalt2.Base=refalt
 
 		oldobinv=self.obj2.plOld.inverse()
 		oldrelref=oldobinv.multiply(lastrefalt)
 		oldrelrefinv=oldrelref.inverse()
-		
+
 		s1=oldobinv.multiply(self.obj2.target.Placement)
 		s2=oldrelrefinv.multiply(s1)
 		s3=refalt2.multiply(s2)
 		self.obj2.target.Placement=s3
-		
+
 		self.obj2.plOld=koopalt
 		self.obj2.refOld=refalt
 
@@ -668,10 +670,10 @@ class _VertexPlugger():
 #		say("on before change")
 
 class _ViewProviderVertexPlugger(object):
- 
+
 	def getIcon(self):
 		return __dir__ +'/icons/sun.png'
-   
+
 	def __init__(self,vobj):
 		say("__init__" + str(self))
 		self.Object = vobj.Object
@@ -700,7 +702,7 @@ class _ViewProviderVertexPlugger(object):
 	def __setstate__(self,state):
 		say("setstate " + str(self) + str(state))
 		return None
-		
+
 	def setEdit(self,vobj,mode=0):
 		##s=TransformWidget(self)
 		say("still no editor")

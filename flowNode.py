@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: LGPL-2.1-or-later
+
 #-------------------------------------------------
 #-- Animation workbench
 #--
@@ -36,7 +38,7 @@ import numpy as np
 
 
 #-------
-# user defined function 
+# user defined function
 #------
 
 import flowlib
@@ -46,7 +48,7 @@ reload(flowlib)
 # damper=flowlib.damper
 
 #
-# end of user function 
+# end of user function
 #
 
 
@@ -88,7 +90,7 @@ def velocity(self,ix,mytime):
 
 	force=self.force
 	damper=self.damper
-	
+
 	(x,y,z)=self.ptslix[ix]
 
 	xy=ix%(self.obj2.dimU*self.obj2.dimV)
@@ -120,31 +122,31 @@ def velocity(self,ix,mytime):
 
 			if xn>self.xmax:
 				xn=self.xmax -ddx*(xn-self.xmax)
-				self.pvs[xp,yp][0]  *= -1 
+				self.pvs[xp,yp][0]  *= -1
 			if xn<self.xmin:
 				xn=self.xmin -ddx*(xn-self.xmin)
-				self.pvs[xp,yp][0]  *= -1 
+				self.pvs[xp,yp][0]  *= -1
 
 			if yn>self.ymax:
 				yn=self.ymax -ddy*(yn-self.ymax)
-				self.pvs[xp,yp][1]  *= -1 
+				self.pvs[xp,yp][1]  *= -1
 			if yn<self.ymin:
 				yn=self.ymin -ddy*(yn-self.ymin)
-				self.pvs[xp,yp][1]  *= -1 
+				self.pvs[xp,yp][1]  *= -1
 
 			if zn>self.zmax:
 				zn=self.zmax -ddz*(zn-self.zmax)
-				self.pvs[xp,yp][2]  *= -1 
+				self.pvs[xp,yp][2]  *= -1
 			if zn<self.zmin:
 				zn=self.zmin -ddz*(zn-self.zmin)
-				self.pvs[xp,yp][2]  *= -1 
+				self.pvs[xp,yp][2]  *= -1
 
 
 	elif self.obj2.boundMode=='Bound Cylinder':
 
 		r=40
 		r=max(self.xmax,self.ymax)
-		
+
 		if xn**2+yn**2>r**2:
 			try:
 				(x2,y2)=lineCircleCommon(x,y,xn,yn,r)
@@ -164,7 +166,7 @@ def velocity(self,ix,mytime):
 
 		if zn<self.zmin:
 			zn=self.zmin -ddz*(zn-self.zmin)
-			self.pvs[xp,yp][2]  *= -1 
+			self.pvs[xp,yp][2]  *= -1
 
 
 	elif self.obj2.boundMode=='no Bounds':
@@ -176,7 +178,7 @@ def velocity(self,ix,mytime):
 	rr=self.obj2.noise
 	if zn <-5:
 		xn,yn,zn=xn+rr*(0.5-random.random()),yn+rr*(0.5-random.random()),zn+rr*(0.5-random.random())
-	
+
 	self.ptslix[ix+self.obj2.dimU*self.obj2.dimV]=[xn,yn,zn]
 	return self.ptslix[ix+self.obj2.dimU*self.obj2.dimV]
 
@@ -239,7 +241,7 @@ def createStepFC(self,i):
 		for b in range(lb):
 			t=tuple(self.ptslix[self.ptsl[i][a][b]])
 			if np.isnan(t[0]) or np.isnan(t[1]) or np.isnan(t[2]):
-				
+
 				pass
 
 			elif 	abs(t[0])<10 and  abs(t[1])<20:
@@ -278,8 +280,8 @@ def createStepFC(self,i):
 
 def animateIntervall(self,pb=None,start=0,ende=None,objs=None):
 	Gui.ActiveDocument.ActiveView.setAnimationEnabled(False)
-	
-	if objs==None: 
+
+	if objs==None:
 		objs=pclgroup().OutList
 	if ende==None: ende=len(objs)+ self.obj2.count4Slides
 	if start+1!=ende and pb == None: 	pb=createProgressBar("animation ..")
@@ -303,7 +305,7 @@ def animateIntervall(self,pb=None,start=0,ende=None,objs=None):
 
 	for i0 in range(start,ende):
 		if pb!=None: pb.pb.setValue(i0*100/(ende-start-1))
-		
+
 		period=self.obj2.period
 		if period<1: period=10000
 
@@ -312,7 +314,7 @@ def animateIntervall(self,pb=None,start=0,ende=None,objs=None):
 
 		for i in range(i0,0,-period):
 			try:
-				
+
 			#	objs[i-kkk].ViewObject.hide()
 				for j in range(self.obj2.count4Slides):
 					if i-j>=0:
@@ -383,7 +385,7 @@ def createFCOs(self,anz,step=1):
 	pb=createProgressBar("create FreeCAD objects")
 	ts=time.time()
 	for i in range(anz-1):
-		if i%step == 0: 
+		if i%step == 0:
 			createStepFC(self,i)
 			pb.pb.setValue(i*100/(anz-2))
 			Gui.updateGui()
@@ -439,11 +441,11 @@ def createFlow(name='My_Flow',target=None,src=None):
 
 	obj.addProperty("App::PropertyEnumeration","startFace","Layout","")
 	obj.startFace=['Circle','Rectangle']
-	
+
 	obj.addProperty("App::PropertyPlacement","startPosition","Clouds","")
 	obj.addProperty("App::PropertyPlacement","deltaPosition","Clouds","")
 	# obj.deltaPosition.Rotation=FreeCAD.Rotation(FreeCAD.Vector(0,0,1),-5)
-	
+
 	obj.addProperty("App::PropertyInteger","count2Slides","Clouds","").count2Slides=2
 	obj.addProperty("App::PropertyInteger","count3Slides","Clouds","").count3Slides=6
 	obj.addProperty("App::PropertyInteger","count4Slides","Clouds","").count4Slides=14
@@ -457,7 +459,7 @@ def createFlow(name='My_Flow',target=None,src=None):
 
 	obj.addProperty("App::PropertyFloat","lengthStartCloud","Layout","").lengthStartCloud=100
 	obj.addProperty("App::PropertyFloat","widthStartCloud","Layout","").widthStartCloud=100
-	
+
 	obj.addProperty("App::PropertyString","methodForce","Layout","").methodForce="myforce"
 	obj.addProperty("App::PropertyString","methodDamper","Layout","").methodDamper="mydamper"
 
@@ -491,7 +493,7 @@ class _Flow(Animation._Actor):
 		except:
 			say("update (ohne Label)")
 		objs=pclgroup().OutList
-		for u in objs: 
+		for u in objs:
 			u.ViewObject.hide()
 			u.ViewObject.ShapeColor=(1.0,0.0,0.0)
 		i=int(round(time*(len(objs)-1)))
@@ -532,7 +534,7 @@ class _Flow(Animation._Actor):
 		objs=pclgroup().OutList
 		animateIntervall(self,None,value,value+1)
 		return
-		
+
 		for u in objs:
 			u.ViewObject.hide()
 		objs[value].ViewObject.show()
@@ -613,13 +615,13 @@ class _Flow(Animation._Actor):
 		reload(flowlib)
 		force=eval("flowlib."+self.obj2.methodForce)
 		self.force=force
-		
+
 		damper=eval("flowlib."+self.obj2.methodDamper)
 		self.damper=damper
 
 		ts=time.time()
 
-		for i in range(anz-1): 
+		for i in range(anz-1):
 			createStepPtsV2(self,i)
 			pb.pb.setValue(i*100/(anz-2))
 
@@ -634,7 +636,7 @@ class _Flow(Animation._Actor):
 		hideAll()
 
 		pb.hide()
-		
+
 		##animateIntervall(self)
 
 
@@ -757,7 +759,7 @@ def run():
 
 	f.sleep=0.0
 	f.noise=0
-	
+
 	#f.startFace='Rectangle'
 	f.lengthStartCloud=100
 	f.widthStartCloud=100

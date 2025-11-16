@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: LGPL-2.1-or-later
 
 import numpyNode
 reload(numpyNode)
@@ -51,4 +52,4 @@ t2.useOut1=True
 t2.useOut2=True
 t2.record=True
 
-	
+

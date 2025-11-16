@@ -1,4 +1,4 @@
-
+# SPDX-License-Identifier: LGPL-2.1-or-later
 
 #
 #
@@ -89,7 +89,7 @@ reload(AnimationControlPanel)
 w=AnimationControlPanel.createAnimationControlPanel()
 w.line1=["Speeder_Ping_Pong","Speeder_quadratic"]
 w.line2=["Speeder_forward","Speeder_backward"]
-w.line3=["BoxPlacer_normal","BoxPlacer_quad","BoxPlacer_reverse"] 
+w.line3=["BoxPlacer_normal","BoxPlacer_quad","BoxPlacer_reverse"]
 
 
 App.activeDocument().recompute()

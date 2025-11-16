@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: LGPL-2.1-or-later
 
 # testcase manager and placer, tracker, trackreader
 
@@ -18,7 +19,7 @@ reload(Tracker)
 
 import Trackreader
 reload(Trackreader)
- 
+
 
 d=App.newDocument("Unbenannt")
 b=App.activeDocument().addObject("Part::Box","Box")

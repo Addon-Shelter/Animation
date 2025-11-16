@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: LGPL-2.1-or-later
 
 import Animation
 from Animation import *
@@ -15,7 +16,7 @@ import Draft
 #r=Draft.makeRectangle(length=200,height=200)
 #r.Placement.Base.z=-0.02
 
-if False: 
+if False:
 	for x in range(101):
 		points=[FreeCAD.Vector(2*x,-200,-0.1),FreeCAD.Vector(2*x,200,-0.1)]
 		w=Draft.makeWire(points)

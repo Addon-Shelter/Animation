@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: LGPL-2.1-or-later
+
 #-------------------------------------------------
 #-- Animation workbench
 #--
@@ -12,7 +14,7 @@ import math,os, time
 from EditWidget import EditWidget
 
 __vers__= '0.2'
-__dir__ = os.path.dirname(__file__)	
+__dir__ = os.path.dirname(__file__)
 
 
 def createCombiner(name='My_Combiner',target=None,src=None):
@@ -28,12 +30,12 @@ def createCombiner(name='My_Combiner',target=None,src=None):
 	obj.target=target
 	obj.addProperty("App::PropertyLinkList","targets","Base","")
 	obj.addProperty("App::PropertyLinkList","followers","Base","")
-	
+
 	obj.addProperty("App::PropertyFloat","out","Results","")
 	obj.addProperty("App::PropertyFloat","out2","Results","")
 	obj.addProperty("App::PropertyFloat","out3","Results","")
 	obj.addProperty("App::PropertyFloat","out4","Results","")
-	
+
 	obj.addProperty("App::PropertyFloat","time","Base","")
 	obj.time=0
 
@@ -45,7 +47,7 @@ def createCombiner(name='My_Combiner',target=None,src=None):
 	obj.trafo2="2*time"
 	obj.trafo3="30*time"
 	obj.trafo4="400*time"
-	
+
 	obj.addProperty("App::PropertyFloat","a","FunctionParameter","")
 	obj.addProperty("App::PropertyFloat","b","FunctionParameter","")
 	obj.addProperty("App::PropertyFloat","c","FunctionParameter","")
@@ -96,7 +98,7 @@ class _Combiner(Animation._Actor):
 			try:
 				tl[t].Proxy.step(outl[t])
 				tl[t].Proxy.update()
-				say("combiner update " + str(tl[t].Label) +  " wert: " + str(outl[t])) 
+				say("combiner update " + str(tl[t].Label) +  " wert: " + str(outl[t]))
 			except:
 				pass
 

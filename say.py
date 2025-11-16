@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: LGPL-2.1-or-later
+
 #-------------------------------------------------
 #-- Animation workbench
 #--
@@ -23,7 +25,7 @@ import numpy as np
 
 #import matplotlib
 #import matplotlib.pyplot as plt
-#from matplotlib.pyplot import cm 
+#from matplotlib.pyplot import cm
 
 import os,random,time,sys,traceback
 

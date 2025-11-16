@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: LGPL-2.1-or-later
+
 import FreeCAD
 import FreeCADGui
 import PySide
@@ -62,9 +64,9 @@ def updateData(obj,sk=None):
 	anz2=10
 	anz2=4
 
-	rra=np.arange(2*anz2+1)*np.pi*2/(2*anz2+1) 
+	rra=np.arange(2*anz2+1)*np.pi*2/(2*anz2+1)
 #	pos=np.interp(rra, alpha, ns)/(anz)
-	
+
 #	if 0:
 #		import scipy
 #		from scipy.interpolate import interp1d
@@ -107,7 +109,7 @@ def updateData(obj,sk=None):
 #	for p in ptsa:print p
 
 	alphaq=[np.arctan2(p.y,p.x) for p in ptsa]
-	
+
 #	print "alphaq"
 #	for a in alphaq: print a
 
@@ -123,7 +125,7 @@ def updateData(obj,sk=None):
 
 	anz=len(alpha)
 	ns=np.arange(len(alpha))
-	
+
 	#if obj.useBSpline:
 	bc=Part.BSplineCurve()
 	bc.approximate(ptsa,DegMin=1,DegMax=obj.degreeBSpline,Tolerance=obj.approxTolerance)
@@ -136,12 +138,12 @@ def updateData(obj,sk=None):
 		if cww== None:
 			cww=App.ActiveDocument.addObject('Part::Feature',obj.pathName+'_OFFSET')
 
-		
+
 		pol=Part.makePolygon(ptsa)
 		cww.Shape=pol
 		if obj.useBSpline:
 			cww.Shape=bc.toShape()
-		
+
 		App.ActiveDocument.ActiveObject.ViewObject.LineColor=(1.,0.,0.)
 		App.ActiveDocument.ActiveObject.ViewObject.LineWidth=8
 
@@ -151,8 +153,8 @@ def updateData(obj,sk=None):
 	# jetzt die Animationsschritte
 	anz2=50
 	print("Interpolation anz, anz2",anz,anz2)
-	
-	rra=np.arange(2*anz2+1)*np.pi*2/(2*anz2+1) 
+
+	rra=np.arange(2*anz2+1)*np.pi*2/(2*anz2+1)
 	pos=np.interp(rra, alpha, ns)/(anz)
 
 #-
@@ -204,7 +206,7 @@ def runAnimation(obj=None,loop=False):
 	cyy=App.ActiveDocument.getObject(obj.pathName)
 
 	if loop: ixs=obj.kka
-	else: 
+	else:
 		ixs=[obj.kka[obj.anim]]
 		ixs=[obj.kka[obj.anim-1]]
 
@@ -242,7 +244,7 @@ def runAnimation(obj=None,loop=False):
 
 		try:pos=obj.path.Shape.Curve.parameter(p)
 		except: pos=obj.path.Shape.Edge1.Curve.parameter(p)
-		
+
 		arc2=-pos/obj.offsetValue/np.pi/2*180
 
 		#print ("rot",arc2,alpha)
@@ -346,7 +348,7 @@ class ViewProvider:
 		return None
 
 	def getIcon(self):
-		__dir__ = os.path.dirname(__file__)	
+		__dir__ = os.path.dirname(__file__)
 		return  __dir__+ '/icons/abroller.png'
 
 #-------------------------------
@@ -411,7 +413,7 @@ def createAbroller():
 
 	# runAnimation(obj,True)
 	for prop in ["approxTolerance","degreeBSpline","densityPoints","useBSpline"]:
-		obj.setEditorMode(prop, 2) 
+		obj.setEditorMode(prop, 2)
 
 
 

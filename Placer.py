@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: LGPL-2.1-or-later
+
 #-------------------------------------------------
 #-- Animation workbench
 #--
@@ -13,7 +15,7 @@ from Animation import say,sayErr,sayexc
 from  EditWidget import EditWidget
 
 __vers__= '0.1'
-__dir__ = os.path.dirname(__file__)	
+__dir__ = os.path.dirname(__file__)
 
 def createPlacer(name='My_Placer',target=None,src=None):
 	obj = FreeCAD.ActiveDocument.addObject("App::DocumentObjectGroupPython",name)
@@ -23,7 +25,7 @@ def createPlacer(name='My_Placer',target=None,src=None):
 	c3.target=target
 	c3.addProperty("App::PropertyLinkList","followers","Base","")
 
-	
+
 	c3.addProperty("App::PropertyLink","src","Base","")
 	c3.src=src
 	c3.addProperty("App::PropertyFloat","time","Base","")
@@ -63,7 +65,7 @@ def createPlacer(name='My_Placer',target=None,src=None):
 	c3.addProperty("App::PropertyVector","RotAxis","Parameter","")
 	c3.RotAxis=FreeCAD.Vector(0,0,1)
 
-	# functions 
+	# functions
 	c3.addProperty("App::PropertyString","x","Functions","")
 	c3.x="x0+(x1-x0)*time"
 	c3.addProperty("App::PropertyString","y","Functions","")
@@ -96,13 +98,13 @@ class _Placer(Animation._Actor):
 		z1=self.obj2.z1
 		arc0=self.obj2.arc0
 		arc1=self.obj2.arc1
-		
+
 		if self.obj2.target:
 			if self.obj2.target.__class__.__name__ == 'GroupExtension':
 				t=self.obj2.target.Group[0]
 			else:
 				t=self.obj2.target
-				
+
 			x=t.Placement.Base.x
 			y=t.Placement.Base.y
 			z=t.Placement.Base.z
@@ -119,7 +121,7 @@ class _Placer(Animation._Actor):
 			srz=self.obj2.src.Placement.Rotation.Axis.z
 			sarc=self.obj2.src.Placement.Rotation.Angle
 		except:
-			pass 
+			pass
 			# saye("keine src festgelegt")
 
 		# compute the new placement
@@ -180,7 +182,7 @@ class _ViewProviderPlacer(Animation._ViewProviderActor):
 		# items for edit dialog  and contextmenue
 		self.emenu=[['A',self.funA],['B',self.funB]]
 		self.cmenu=[['AC',self.funA],['BC',self.funB]]
-		
+
 		say("VO attach " + str(vobj.Object.Label))
 		vobj.Proxy = self
 		self.Object = vobj.Object
@@ -221,7 +223,7 @@ class _ViewProviderPlacer(Animation._ViewProviderActor):
 		n=0
 		for v in inlist:
 			v.ViewObject.Visibility=vlist[n]
-			n +=1 
+			n +=1
 
 
 	def funA(self):
@@ -230,7 +232,7 @@ class _ViewProviderPlacer(Animation._ViewProviderActor):
 		self.obj2.target.touch()
 		FreeCAD.ActiveDocument.recompute()
 		say("ich war  FunA")
-		
+
 
 	def funB(self):
 		say("ich bin FunB tozch target")

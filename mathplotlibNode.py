@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: LGPL-2.1-or-later
+
 #-------------------------------------------------
 #-- animation workbench
 #--
@@ -15,7 +17,7 @@ import random
 import numpy as np
 import time
 
-__dir__ = os.path.dirname(__file__)	
+__dir__ = os.path.dirname(__file__)
 
 
 #import matplotlib
@@ -47,7 +49,7 @@ class _MPL(Animation._Actor):
 		self.Type = self.__class__.__name__
 		self.obj2 = obj
 		self.vals={}
-		_ViewProviderMPL(obj.ViewObject) 
+		_ViewProviderMPL(obj.ViewObject)
 
 
 	def onChanged(self,obj,prop):
@@ -91,7 +93,7 @@ class _MPL(Animation._Actor):
 		if not obj.record:
 			say(obj.Label+ " no recording")
 			return
-		
+
 
 		try: t=self.vals
 		except: self.vals={}
@@ -169,7 +171,7 @@ class MatplotlibWidget(FigureCanvas):
 
 		super(MatplotlibWidget, self).__init__(Figure())
 		self.setParent(parent)
-		self.figure = Figure(figsize=(width, height), dpi=dpi) 
+		self.figure = Figure(figsize=(width, height), dpi=dpi)
 		self.canvas = FigureCanvas(self.figure)
 
 		FigureCanvas.setSizePolicy(self,
@@ -194,7 +196,7 @@ VerticalLayout:
 
 #		QtGui.QLabel:
 #			setText:"***    My    M A T P L O T L I B     ***"
-#		
+#
 
 '''
 
@@ -211,14 +213,14 @@ VerticalLayout:
 
 
 			k=self.plot_histogram()
-			
+
 #			FreeCAD.k=k
 #			self.mpl.axes.set_xlabel('length')
 #			self.mpl.axes.set_ylabel('count')
 #			self.mpl.axes.title=self.obj.Label
 
 			return
-		
+
 		self.mpl.figure.clf()
 		self.mpl.canvas = FigureCanvas(self.mpl.figure)
 		FigureCanvas.updateGeometry(self.mpl)
@@ -257,7 +259,7 @@ VerticalLayout:
 				y1=vals
 				x=range(len(vals))
 				exec("label=self.obj.source"+nr+"Data")
-				# label="Label for " + str(nr) + ": "+ label 
+				# label="Label for " + str(nr) + ": "+ label
 				t=self.mpl.axes.plot(x,y1,label=label)
 #				exec("self.obj.source"+nr+"Values=y1")
 				say("DDone")
@@ -275,12 +277,12 @@ VerticalLayout:
 						if label=='':
 							label="numpy " + str(i)
 
-	#					if x == []: 
+	#					if x == []:
 						x=range(len(y))
 						if self.obj.outTime!=[]:
 							x=self.obj.outTime
 						say(("lens",len(x),len(y)))
-						
+
 						t=self.mpl.axes.plot(x,y,label=label)
 						exec("self.obj.out"+str(i)+"="+str(y))
 					except:
@@ -292,7 +294,7 @@ VerticalLayout:
 
 
 	def plot_histogram(self): # for mode ==histogram
-		
+
 		self.mpl.figure.clf()
 		self.mpl.canvas = FigureCanvas(self.mpl.figure)
 		FigureCanvas.updateGeometry(self.mpl)
@@ -307,15 +309,15 @@ VerticalLayout:
 		vals=eval(y)
 		# Proxy.extras.linelengths2
 		# say(vals)
-		
+
 		FreeCAD.mpl=self.mpl
 		# self.mpl.axes.axis([-90, 90, 0, 100])
 		n, bins, patches = self.mpl.axes.hist(vals, 180, normed=0, facecolor='green', alpha=0.75)
 		self.mpl.axes.axis([0, 180, 0, np.max(n)])
-		
+
 
 		# legend = self.mpl.axes.legend(loc='upper right', shadow=True)
-		
+
 		self.mpl.draw()
 		self.mpl.figure.canvas.draw()
 
@@ -341,7 +343,7 @@ VerticalLayout:
 		par=self.root.ids['main']
 
 		l=QtGui.QLabel(self.obj.Label)
-		
+
 		self.mpl=MatplotlibWidget()
 		bt=QtGui.QPushButton("update diagram")
 		bt.clicked.connect(self.plot)
@@ -383,8 +385,8 @@ def createMPL(base=False):
 
 	if not base:
 		_MPL(obj)
-		#_ViewProviderMPL(obj.ViewObject,__dir__+ '/icons/icon1.svg') 
-		
+		#_ViewProviderMPL(obj.ViewObject,__dir__+ '/icons/icon1.svg')
+
 		obj.countSources=1
 
 		app=MyApp()

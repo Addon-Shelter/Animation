@@ -1,4 +1,4 @@
-
+# SPDX-License-Identifier: LGPL-2.1-or-later
 
 ll=['test_manager','test_placer']
 

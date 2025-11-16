@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: LGPL-2.1-or-later
 
 # testcase manager
 
@@ -38,8 +39,8 @@ ss.ViewObject.Visibility=False
 FreeCADGui.ActiveDocument.ActiveView.setAnimationEnabled(False)
 FreeCAD.ActiveDocument.recompute()
 FreeCADGui.SendMsgToActiveView("ViewFit")
-FreeCADGui.updateGui() 
- 
+FreeCADGui.updateGui()
+
 
 r=Placer.createPlacer("BoxPlacer",b)
 to=Toucher.createToucher("Touch Common",b)

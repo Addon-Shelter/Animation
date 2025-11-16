@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: LGPL-2.1-or-later
 
 # testcase manager and placer, tracker
 
@@ -15,7 +16,7 @@ reload(Placer)
 
 import Tracker
 reload(Tracker)
- 
+
 
 d=App.newDocument("Unbenannt")
 b=App.activeDocument().addObject("Part::Box","Box")

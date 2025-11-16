@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: LGPL-2.1-or-later
+
 #-------------------------------------------------
 #-- animation workbench keyboard sensor
 #--
@@ -8,7 +10,7 @@
 
 import FreeCAD,PySide,os,FreeCADGui
 from PySide import QtCore, QtGui, QtSvg
-from PySide.QtGui import * 
+from PySide.QtGui import *
 import Part
 
 from  EditWidget import EditNoDialWidget
@@ -20,7 +22,7 @@ import FreeCAD, Animation, PySide
 from Animation import say,sayErr,sayexc
 
 __vers__='0.1 5.12.2015'
-__dir__ = os.path.dirname(__file__)	
+__dir__ = os.path.dirname(__file__)
 
 
 #----------------------
@@ -48,7 +50,7 @@ class EventFilter(QtCore.QObject):
 		#self.debug=False
 		self.debug=FreeCAD.ParamGet('User parameter:Plugins').GetBool('EventFilterDebug')
 		self.debug=True
-		
+
 	def eventFilter(self, o, e):
 		z=str(e.type())
 		try:
@@ -60,14 +62,14 @@ class EventFilter(QtCore.QObject):
 					z == 'PySide.QtCore.QEvent.Type.LayoutRequest' or\
 					z == 'PySide.QtCore.QEvent.Type.UpdateRequest'   :
 				return QtGui.QWidget.eventFilter(self, o, e)
-			
+
 			if z == 'PySide.QtCore.QEvent.Type.HoverMove' :
 				self.pos=e.pos()
 			if z == 'PySide.QtCore.QEvent.Type.KeyPress':
 				# ignore editors
 				if self.editmode:
 					return QtGui.QWidget.eventFilter(self, o, e)
-				
+
 				# only first time key pressed
 				if not self.keypressed:
 					text=e.text()
@@ -83,9 +85,9 @@ class EventFilter(QtCore.QObject):
 						if e.modifiers() & QtCore.Qt.ALT:
 							#FreeCAD.Console.PrintMessage("ALT ")
 							key +="ALT+"
-						key +=PySide.QtGui.QKeySequence(e.key()).toString() 
+						key +=PySide.QtGui.QKeySequence(e.key()).toString()
 						FreeCAD.Console.PrintMessage(" "+str(key)  +" \n" )
-						
+
 						pos=self.pos
 						#if e.key()== QtCore.Qt.Key_F10:
 						#	key += "F10#"
@@ -116,7 +118,7 @@ class EventFilter(QtCore.QObject):
 								self.V.Placement.Base.x -= step
 								self.V.Placement.Base.y -= step
 
-								
+
 							elif key == 'H':
 								s=Gui.Selection.getSelection()
 								try:
@@ -180,7 +182,7 @@ class _Keyboard(Animation._Actor):
 		return
 
 class _ViewProviderKeyboard(Animation._ViewProviderActor):
- 
+
 	def getIcon(self):
 		return __dir__ +'/icons/icon1.svg'
 
@@ -205,23 +207,23 @@ class _ViewProviderKeyboard(Animation._ViewProviderActor):
 	def dialer(self):
 		self.obj2.time=float(self.widget.dial.value())/100
 		FreeCAD.ActiveDocument.recompute()
-	
+
 	def start(self):
 		say("start sensor")
 		mw=QtGui.qApp
-		
+
 		ef=EventFilter(self.obj2)
 		FreeCAD.keyfilter=ef
 		mw.installEventFilter(ef)
-	
+
 	def stop(self):
 		say("stop sensor")
-		
+
 		mw=QtGui.qApp
 		ef=FreeCAD.keyfilter
 		mw.removeEventFilter(ef)
 		say("stopped")
 
-		
+
 
 

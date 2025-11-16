@@ -1,4 +1,6 @@
-# -*- 
+# SPDX-License-Identifier: LGPL-2.1-or-later
+
+# -*-
 #-------------------------------------------------
 #-- animation workbench pather
 #--
@@ -9,7 +11,7 @@
 
 import FreeCAD,PySide,os,FreeCADGui
 from PySide import QtCore, QtGui, QtSvg
-from PySide.QtGui import * 
+from PySide.QtGui import *
 import Part
 
 from  EditWidget import EditWidget
@@ -21,7 +23,7 @@ import FreeCAD, Animation, PySide
 from Animation import say,sayErr,sayexc
 
 __vers__='0.1 3.12.2015'
-__dir__ = os.path.dirname(__file__)	
+__dir__ = os.path.dirname(__file__)
 
 
 def createPather(name='My Pather',src=None):
@@ -44,7 +46,7 @@ class _Pather(Animation._Actor):
 			self.path
 		except:
 			self.path=[]
-		
+
 		# w=App.ActiveDocument.BSpline003
 		#pl=[]
 		#for n in range(101):
@@ -54,10 +56,10 @@ class _Pather(Animation._Actor):
 		#
 		#w=Draft.makeWire(pl)
 		w=self.obj2.src
-		
+
 		#kk=w.Shape.LastParameter*self.obj2.time
 		#p=w.Shape.valueAt(kk)
-		
+
 		try:
 			p=w.Shape.Wires[0].discretize(101)[int(round(100*self.obj2.time))]
 		except:
@@ -76,7 +78,7 @@ class _Pather(Animation._Actor):
 
 
 class _ViewProviderPather(Animation._ViewProviderActor):
- 
+
 	def getIcon(self):
 		return __dir__ +'/icons/pather.png'
 

@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: LGPL-2.1-or-later
+
 #-------------------------------------------------
 #-- Animation workbench
 #--
@@ -15,7 +17,7 @@ from Animation import say,sayErr,sayexc
 from  EditWidget import EditWidget
 
 __vers__= '0.2'
-__dir__ = os.path.dirname(__file__)	
+__dir__ = os.path.dirname(__file__)
 
 
 
@@ -106,7 +108,7 @@ class _Kartan(Animation._Actor):
 	def step(self,now):
 		say("Kardan step!" + str(now))
 		FreeCAD.R=self
-		
+
 		if now<self.obj2.start or now>=self.obj2.end:
 			say("ausserhalb")
 			pass
@@ -114,11 +116,11 @@ class _Kartan(Animation._Actor):
 			if not self.obj2.obj:
 				errorDialog("kein Sketch zugeordnet")
 				raise Exception(' self.obj2.obj nicht definiert')
-			
+
 			# alpha=60
 			alpha=self.obj2.angleZenit
 			phi=1
-			
+
 			# testfall
 			phi=10
 
@@ -131,15 +133,15 @@ class _Kartan(Animation._Actor):
 			r1=p1.multiply(p0)
 			fa1.Placement=r1
 
-			
+
 			phi20=arctan(tan(phi0*pi/180)*cos(alpha*pi/180))*180/pi
 			phi21=arctan(tan((phi0+phi)*pi/180)*cos(alpha*pi/180))*180/pi
 			say("phi20 "+str(phi20))
 			say("phi21 "+str(phi21))
-			
+
 			# achse 2
 			timepos=now-self.obj2.start
-			if 90/phi-1<=timepos and timepos<270/phi-1: 
+			if 90/phi-1<=timepos and timepos<270/phi-1:
 				phi21=180+phi21
 				say("*************** ! phi21 ="+str(phi21) + " now:" + str(now))
 
@@ -175,7 +177,7 @@ class _Kartan(Animation._Actor):
 				return
 		else:
 			say("noch kein animation Lock")
-			
+
 		FreeCAD.animationLock=True
 		say("------------------------------***Lock EIN")
 		FreeCAD.mytoc=[self,obj,prop]
@@ -203,10 +205,10 @@ class _Kartan(Animation._Actor):
 
 	def execute(self,obj):
 		say("execute _Kardan")
-		
+
 
 class _ViewProviderKartan(Animation._ViewProviderActor):
-	
+
 	def getIcon(self):
 		return __dir__ + '/icons/kardan.png'
 

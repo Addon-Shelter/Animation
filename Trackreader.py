@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: LGPL-2.1-or-later
+
 #-------------------------------------------------
 #-- animation workbench trackreader
 #--
@@ -9,7 +11,7 @@
 
 import FreeCAD,PySide,os,FreeCADGui
 from PySide import QtCore, QtGui, QtSvg
-from PySide.QtGui import * 
+from PySide.QtGui import *
 import math
 import numpy as np
 App,Gui=FreeCAD,FreeCADGui
@@ -29,7 +31,7 @@ from Animation import say,sayErr,sayexc
 from  EditWidget import EditWidget
 
 __vers__= '0.1'
-__dir__ = os.path.dirname(__file__)	
+__dir__ = os.path.dirname(__file__)
 
 
 import FreeCAD,os,time,sys,traceback
@@ -59,7 +61,7 @@ def interpol2(filename,show=True):
 	for line in open(filename + "_out.txt", "r"):
 		line=line.rstrip('\r\n')
 		ll= line.split(' ')
-		if ll[0] == '#': 
+		if ll[0] == '#':
 			continue
 		llf=[]
 		for z in ll:
@@ -69,7 +71,7 @@ def interpol2(filename,show=True):
 		xv.append(llf[1])
 		yv.append(llf[2])
 		zv.append(llf[3])
-		
+
 		rx.append(llf[4])
 		ry.append(llf[5])
 		rz.append(llf[6])
@@ -115,7 +117,7 @@ def interpol2(filename,show=True):
 			pass
 	fout.close()
 	#return [fx,fy,fz]
-	
+
 
 
 def createTrackReader(name,target,filename):
@@ -138,7 +140,7 @@ class _TrackReader(Animation._Actor):
 
 	def __init__(self,obj):
 		obj.Proxy = self
-		self.obj2 = obj 
+		self.obj2 = obj
 		self.Lock=False
 		self.Changed=False
 		self.path={}
@@ -219,7 +221,7 @@ class _TrackReader(Animation._Actor):
 
 	def onBeforeChange(self,obj,prop):
 		pass
-	
+
 	def initialize(self):
 		pass
 
@@ -227,7 +229,7 @@ class _TrackReader(Animation._Actor):
 			self.obj2.time=float(now)/100
 
 class _ViewProviderTrackReader(Animation._ViewProviderActor):
- 
+
 	def getIcon(self):
 		return __dir__ +'/icons/icon3.svg'
 
@@ -278,7 +280,7 @@ class _Function(Animation._Actor):
 
 	def __init__(self,obj):
 		obj.Proxy = self
-		self.obj2 = obj 
+		self.obj2 = obj
 		self.Lock=False
 		self.Changed=False
 		self.path={}
@@ -286,7 +288,7 @@ class _Function(Animation._Actor):
 
 
 	def loadtrack(self):
-		
+
 		# interpolate
 		import numpy as np
 		import scipy
@@ -302,7 +304,7 @@ class _Function(Animation._Actor):
 			self.obj2.target.Label ="anim target for "+ self.obj2.source.Label
 
 		# hier andere modi einbauen z. B. Endpunkte der edges #+#
-		
+
 		if self.obj2.usePoints:
 			w=wire
 			pts=[v.Point for v in w.Vertexes]
@@ -326,11 +328,11 @@ class _Function(Animation._Actor):
 #		tz /= zmax
 
 		# siehe https://docs.scipy.org/doc/scipy-0.14.0/reference/generated/scipy.interpolate.interp1d.html
-		
-		
+
+
 		fx = interp1d(tx,ty,kind=self.obj2.kindInterpolation)
 		fz = interp1d(tx,tz,kind=self.obj2.kindInterpolation)
-		
+
 		self.fx=fx
 		self.xmin=xmin
 		self.xmax=xmax
@@ -339,18 +341,18 @@ class _Function(Animation._Actor):
 		#Draft.makeWire(ptsa)
 		pol=Part.makePolygon(ptsa)
 		try: self.k1.Shape=pol
-		except: 
+		except:
 			Part.show(pol)
 			self.k1=App.ActiveDocument.ActiveObject
 			self.k1.Label="cartesian Map for "+ self.obj2.source.Label
-		
+
 
 		# polare Darstellung
 		ptsa=[FreeCAD.Vector(np.cos(np.pi*i/180),np.sin(np.pi*i/180),0)*(self.obj2.a*fx(1.0/360*i)+self.obj2.b) for i in range(361)]
 		#Draft.makeWire(ptsa)
 		pol=Part.makePolygon(ptsa)
 		try: self.k2.Shape=pol
-		except: 
+		except:
 			Part.show(pol)
 			self.k2=App.ActiveDocument.ActiveObject
 			self.k2.Label="polar Map for "+ self.obj2.source.Label
@@ -392,7 +394,7 @@ class _Function(Animation._Actor):
 		if self.obj2.mode=='polar':
 			# pl=FreeCAD.Vector((time*self.xmax)+self.xmin,self.fx(time))
 			pl=FreeCAD.Vector(np.cos(np.pi*time*2),np.sin(np.pi*time*2),0)*(self.obj2.a*self.fx(time)+self.obj2.b)
-		if self.obj2.target != None:	
+		if self.obj2.target != None:
 			self.obj2.target.Placement.Base=pl
 			self.obj2.target.purgeTouched()
 		#self.obj2.Placement=pl
@@ -415,7 +417,7 @@ class _Function(Animation._Actor):
 			self.obj2.time=float(now)
 
 class _ViewProviderFunction(Animation._ViewProviderActor):
- 
+
 	def getIcon(self):
 		return __dir__ +'/icons/icon3.svg'
 
@@ -461,7 +463,7 @@ class _ViewProviderFunction(Animation._ViewProviderActor):
 
 
 def runTA():
-	print("I'm TA") 
+	print("I'm TA")
 	name="MyFunction"
 
 
@@ -471,7 +473,7 @@ def runTA():
 	target=None
 	obj.addProperty("App::PropertyLink","target","Base","")
 	obj.addProperty("App::PropertyLink","source","Base","")
-	
+
 	#obj.source=App.ActiveDocument.Sketch
 	obj.source=Gui.Selection.getSelection()[0]
 #	obj.addProperty("App::PropertyLink","circle","Base","")
@@ -483,7 +485,7 @@ def runTA():
 	obj.addProperty("App::PropertyFloat","a","F=a*f+b","").a=1
 	obj.addProperty("App::PropertyFloat","b","F=a*f+b","").b=0
 	obj.addProperty("App::PropertyInteger","count","","").count=40
-	
+
 	obj.addProperty("App::PropertyPlacement","Placement","_comp","")
 	obj.Placement=FreeCAD.Placement()
 	obj.addProperty("App::PropertyEnumeration","mode","Base").mode=["cartesian","polar"]
@@ -492,7 +494,7 @@ def runTA():
 	obj.addProperty("App::PropertyFloatList", "zlist", "_comp", "end")
 	obj.addProperty("App::PropertyBool", "usePoints", "", "interpolate points").usePoints=True
 	obj.addProperty("App::PropertyEnumeration","kindInterpolation","Base").kindInterpolation=['cubic','linear', 'nearest', 'zero', 'slinear', 'quadratic', ]
-	
+
 
 
 	_Function(obj)

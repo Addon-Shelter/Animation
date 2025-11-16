@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: LGPL-2.1-or-later
+
 #-------------------------------------------------
 #-- Animation workbench
 #--
@@ -12,7 +14,7 @@ import math
 from EditWidget import EditWidget
 
 __vers__= '0.2'
-__dir__ = os.path.dirname(__file__)	
+__dir__ = os.path.dirname(__file__)
 
 def _creategraphs(obj):
 
@@ -96,7 +98,7 @@ def createDiagram(name='My_Diagram',trafo='',trafo2='',trafo3='',trafo4='',trafo
 	obj.addProperty("App::PropertyLink","source2","Base","")
 	obj.addProperty("App::PropertyLink","source3","Base","")
 	obj.addProperty("App::PropertyLink","source4","Base","")
-	
+
 	obj.addProperty("App::PropertyPlacement","graphPlacement","Base","")
 	obj.addProperty("App::PropertyLink","graph","Base","")
 	obj.addProperty("App::PropertyLink","graph2","Base","")
@@ -107,7 +109,7 @@ def createDiagram(name='My_Diagram',trafo='',trafo2='',trafo3='',trafo4='',trafo
 	obj.addProperty("App::PropertyLink","graph7","Base","")
 	obj.addProperty("App::PropertyLink","graph8","Base","")
 	obj.addProperty("App::PropertyLink","graph9","Base","")
-	
+
 	obj.addProperty("App::PropertyFloat","out","Results","")
 	obj.addProperty("App::PropertyFloat","out2","Results","")
 	obj.addProperty("App::PropertyFloat","out3","Results","")
@@ -117,7 +119,7 @@ def createDiagram(name='My_Diagram',trafo='',trafo2='',trafo3='',trafo4='',trafo
 	obj.addProperty("App::PropertyFloat","out7","Results","")
 	obj.addProperty("App::PropertyFloat","out8","Results","")
 	obj.addProperty("App::PropertyFloat","out9","Results","")
-	
+
 	obj.addProperty("App::PropertyFloat","time","Base","")
 	obj.time=0
 
@@ -138,7 +140,7 @@ def createDiagram(name='My_Diagram',trafo='',trafo2='',trafo3='',trafo4='',trafo
 	obj.trafo4=trafo4
 	obj.trafo5=trafo5
 	obj.trafo6=trafo6
-	
+
 	obj.addProperty("App::PropertyFloat","a","FunctionParameter","")
 	obj.addProperty("App::PropertyFloat","b","FunctionParameter","")
 	obj.addProperty("App::PropertyFloat","c","FunctionParameter","")
@@ -200,7 +202,7 @@ class _Diagram(Animation._Actor):
 		if self.obj2.trafo6: out6=eval(self.obj2.trafo6)
 		if self.obj2.trafo7: out7=eval(self.obj2.trafo7)
 		if self.obj2.trafo8: out8=eval(self.obj2.trafo8)
-		if self.obj2.trafo9: out9=eval(self.obj2.trafo9) 
+		if self.obj2.trafo9: out9=eval(self.obj2.trafo9)
 
 #		say([time,out,out2,out3,out4])
 		self.obj2.out=out
@@ -296,7 +298,7 @@ class _ViewProviderDiagram(Animation._ViewProviderActor):
 
 
 if __name__ == '__main__':
-	
+
 	from Diagram import *
 
 	App.setActiveDocument("Unnamed")

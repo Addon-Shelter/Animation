@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: LGPL-2.1-or-later
+
 #-------------------------------------------------
 #-- Animation workbench
 #--
@@ -10,7 +12,7 @@ from say import *
 import math
 
 __vers__= '0.2'
-__dir__ = os.path.dirname(__file__)	
+__dir__ = os.path.dirname(__file__)
 
 
 def createSpeeder(name='My_Speeder',target=None,src=None):
@@ -20,7 +22,7 @@ def createSpeeder(name='My_Speeder',target=None,src=None):
 	obj.target=target
 	obj.addProperty("App::PropertyLinkList","targets","Base","")
 	obj.addProperty("App::PropertyLinkList","followers","Base","")
-	
+
 	obj.addProperty("App::PropertyFloat","time","Base","")
 	obj.time=0
 	obj.addProperty("App::PropertyEnumeration","mode","Functions","").mode=['forward','backward','quadratic','sine wave','fade','ping pong','expression']
@@ -39,13 +41,13 @@ def createSpeeder(name='My_Speeder',target=None,src=None):
 	obj.c=50
 	obj.m=5
 	obj.g=1
-	
+
 	obj.addProperty("App::PropertyString","expressiontrafo","Functions","")
 	# ping pong
 	obj.expressiontrafo="100*2*time if time <0.5 else  100 - 100*2*(time-0.5)"
 	# quadradic
 	obj.expressiontrafo="a*(time-b)**2  + c"
-	
+
 	# hide info
 	obj.setEditorMode("expressiontrafo", 2)
 	_Speeder(obj)
@@ -62,7 +64,7 @@ class _Speeder(Animation._Actor):
 		except:
 			say("update (ohne Label)")
 		time==self.obj2.time
-		
+
 		a=self.obj2.a
 		b=self.obj2.b
 		c=self.obj2.c
@@ -95,7 +97,7 @@ class _Speeder(Animation._Actor):
 		time += 0.01
 		newtime2=eval(self.obj2.trafo)
 		newtime=(newtime2-newtime1)*m
-		
+
 		say(str(time) +" " +self.obj2.trafo +" derive " + str(newtime))
 		say(str(newtime1))
 		say(str(newtime2))
@@ -113,9 +115,9 @@ class _Speeder(Animation._Actor):
 		newtime2=eval(self.obj2.trafo)
 		time -= 2*0.01
 		newtime0=eval(self.obj2.trafo)
-		
+
 		newtime=(newtime2-2*newtime1+newtime0)/0.01*g
-		
+
 		say(str(time) +" " +self.obj2.trafo +" force " + str(newtime))
 		return newtime
 
@@ -157,7 +159,7 @@ class _ViewProviderSpeeder(Animation._ViewProviderActor):
 		# items for edit dialog  and contextmenue
 		self.emenu=[['A',self.funA],['Diagram',self.diagram],]
 		self.cmenu=self.emenu
-		
+
 		say("VO attach " + str(vobj.Object.Label))
 		vobj.Proxy = self
 		self.Object = vobj.Object

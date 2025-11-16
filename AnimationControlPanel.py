@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: LGPL-2.1-or-later
+
 #-------------------------------------------------
 #-- Animation workbench
 #--
@@ -15,7 +17,7 @@ from PySide import QtCore, QtGui
 
 
 __vers__= '0.1'
-__dir__ = os.path.dirname(__file__)	
+__dir__ = os.path.dirname(__file__)
 
 
 Gui=FreeCADGui
@@ -28,7 +30,7 @@ def createAnimationControlPanel(name='My_AnimationControlPanel',line1=[],line2=[
 	obj.addProperty("App::PropertyStringList","line1","Lines","").line1=line1
 	obj.addProperty("App::PropertyStringList","line2","Lines","").line2=line2
 	obj.addProperty("App::PropertyStringList","line3","Lines","").line3=line3
-	
+
 	# hide info
 	#obj.setEditorMode("expressiontrafo", 2)
 	_AnimationControlPanel(obj)

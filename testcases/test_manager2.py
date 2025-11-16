@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: LGPL-2.1-or-later
 
 # testcase manager 2
 
@@ -11,7 +12,7 @@ import Placer
 
 FreeCAD.newDocument("Unbenannt")
 
-# zwei zu animierende Objekte erzeugen und 
+# zwei zu animierende Objekte erzeugen und
 # ihrer Plazierer festlegen
 b=FreeCAD.activeDocument().addObject("Part::Torus","Torus")
 r=Placer.createPlacer("Torus Placer",b)

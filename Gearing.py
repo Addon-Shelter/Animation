@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: LGPL-2.1-or-later
+
 #-------------------------------------------------
 #-- Animation workbench
 #--
@@ -84,7 +86,7 @@ def rotstep(s,day):
 	if an > 2*math.pi:
 		an -= 2*math.pi
 		say("minus 360")
-		
+
 	s.Placement.Rotation.Angle = an
 	say(an*180/math.pi)
 
@@ -95,11 +97,11 @@ class _Gearing(Animation._Actor):
 		obj.Proxy = self
 		self.Type = "Gearing"
 		self.obj2 = obj
-		# for the recursive execute problem 
+		# for the recursive execute problem
 		# - see http://forum.freecadweb.org/viewtopic.php?f=3&t=1894
-		self.ignore=False 
+		self.ignore=False
 
-		
+
 	def step(self,now):
 		say("Gearing step!" + str(now))
 		FreeCAD.R=self
@@ -120,12 +122,12 @@ class _Gearing(Animation._Actor):
 			#say("sonne "+ s.Label)
 			#say("planet "+ p.Label)
 			#say("moinde" + m.Label)
-			
+
 			if now==self.obj2.start:
 				s.Placement.Rotation.Axis=FreeCAD.Vector(0,0,1)
 				p.Placement.Rotation.Axis=FreeCAD.Vector(0,0,1)
 				m.Placement.Rotation.Axis=FreeCAD.Vector(0,0,1)
-				
+
 			# Eigenachsen Rotationen
 			print(s.Placement.Rotation.Angle)
 			an=s.Placement.Rotation.Angle
@@ -139,11 +141,11 @@ class _Gearing(Animation._Actor):
 			rotstep(m,day_moon)
 			#p.Placement.Rotation.Angle += math.pi * 2/day_planet
 			#m.Placement.Rotation.Angle += math.pi * 2/day_moon
-			
+
 			# Schenkel Rotationen
 			sys.Placement.Rotation.Angle += 0
 			pm.Placement.Rotation.Angle += 0
-			
+
 			FreeCAD.activeDocument().recompute()
 
 
@@ -156,7 +158,7 @@ class _Gearing(Animation._Actor):
 		if hasattr(FreeCAD,"animationLock"):
 			if FreeCAD.animationLock:
 				return
-			
+
 		FreeCAD.animationLock=True
 		say("------------------------------***Lock EIN")
 #		say(obj)
@@ -166,13 +168,13 @@ class _Gearing(Animation._Actor):
 		val=obj.getPropertyByName(prop)
 		say("old:" + str(oldval) + " new:" + str(val))
 
-		
+
 		# g=FreeCAD.getDocument("getriebe").getObject("My_Gearing")
 		g=obj
-		
-			
+
+
 		sys=g.obj
-		
+
 		s=sys.Links[0]
 		pm=sys.Links[1]
 		p=pm.Links[0]
@@ -185,10 +187,10 @@ class _Gearing(Animation._Actor):
 		# age moond stren
 		if prop=='distPlanetMoon':
 			m.Placement.Base.x=obj.distPlanetMoon
-			
+
 		if prop=='end':
 			obj.end=obj.start+obj.duration
-		
+
 		say("begonnen")
 		if prop=='objMoon':
 			m.Links=[obj.objMoon]
@@ -200,9 +202,9 @@ class _Gearing(Animation._Actor):
 		FreeCAD.activeDocument().recompute()
 		say("******************************Lock aus")
 		say("fertig")
-			
-		
-		
+
+
+
 	def onBeforeChange(self,obj,prop):
 		say("** on Before Changed " )
 		FreeCAD.animationLock=False
@@ -212,7 +214,7 @@ class _Gearing(Animation._Actor):
 		oldval=obj.getPropertyByName(prop)
 		FreeCAD.animation['changed'] =[obj,prop,oldval]
 		pass
-		
+
 
 	def execute(self,obj):
 # 		obj.end=obj.start+obj.duration
@@ -224,15 +226,15 @@ class _Gearing(Animation._Actor):
 			if self.ignore:
 				say("ignore")
 				return
-		
-		
+
+
 		# wenn noch keine zuordnung erfolgt ist
 		App=FreeCAD
-		
-		
+
+
 
 class _ViewProviderGearing(Animation._ViewProviderActor):
-	
+
 	def getIcon(self):
 		return __dir__ + '/icons/gearing.png'
 

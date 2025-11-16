@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: LGPL-2.1-or-later
+
 #-------------------------------------------------
 #-- animation workbench
 #--
@@ -18,7 +20,7 @@ import random
 import numpy as np
 import time
 
-__dir__ = os.path.dirname(__file__)	
+__dir__ = os.path.dirname(__file__)
 
 import Animation
 
@@ -28,7 +30,7 @@ class _NP(Animation._Actor):
 		obj.Proxy = self
 		self.Type = self.__class__.__name__
 		self.obj2 = obj
-		_ViewProviderNP(obj.ViewObject) 
+		_ViewProviderNP(obj.ViewObject)
 
 
 	def execute(self,obj):
@@ -76,7 +78,7 @@ class _ViewProviderNP(Animation._ViewProviderActor):
 		vobj.Proxy = self
 		self.vers=__vers__
 
- 
+
 	def getIcon(self):
 		return  __dir__+ '/icons/icon2.svg'
 

@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: LGPL-2.1-or-later
+
 #-------------------------------------------------
 #-- Animation workbench
 #--
@@ -9,7 +11,7 @@ from PySide import QtCore, QtGui
 from say import *
 
 class _EditWidget(QtGui.QWidget):
-	'''double clicked dialog''' 
+	'''double clicked dialog'''
 	def __init__(self, dialer,obj,menu,noclose,*args):
 		QtGui.QWidget.__init__(self, *args)
 		obj.widget=self

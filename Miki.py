@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: LGPL-2.1-or-later
+
 #-------------------------------------------------
 #-- miki - my kivy like creation tools
 #--
@@ -98,7 +100,7 @@ class Miki():
 
 	def parse2(self,s):
 		app=self.app
-		
+
 		ls=s.splitlines()
 		line=0
 		depth=0
@@ -109,7 +111,7 @@ class Miki():
 		r=None
 		r=[-1,0,0,'']
 		for l in ls:
-			if r: 
+			if r:
 				rs.append(r)
 				r=[-1,0,0,'']
 			line += 1
@@ -120,7 +122,7 @@ class Miki():
 
 			if l.startswith('#'):
 				continue
-				
+
 			res=re.search("(\s*)(\S.*)",l)
 			if res:
 				l=len(res.group(1))
@@ -136,7 +138,7 @@ class Miki():
 
 				r=[l,line,parent,res.group(2)]
 				st=res.group(2)
-				
+
 				res=re.search("(\S+):\s*\*(\S+)",st)
 				if res:
 					r=[l,line,parent,'link',res.group(1),res.group(2),refs[res.group(2)]]
@@ -161,7 +163,7 @@ class Miki():
 						rs[parent].append(res.group(2))
 				else:
 					res=re.search("(\S+):",st)
-					if res:    
+					if res:
 						r=[l,line,parent,"obj", res.group(1),'no anchor']
 
 		self.lines=rs
@@ -171,7 +173,7 @@ class Miki():
 	def build(self):
 		for l in self.lines:
 			if l[3]=='cmd':
-				try: 
+				try:
 					exec(l[4])
 				except:
 					sayexc(str(["Error exec:",l[4]]))
@@ -182,7 +184,7 @@ class Miki():
 					if len(l)<7: # no name for object
 						l.append('')
 					label=l[6]
-					
+
 					h=eval(f)
 					if len(l)<7:
 						l.append(None)
@@ -241,7 +243,7 @@ class Miki():
 						ex="parent."+method+".setValue(" +str(v) + ")"
 						exec(ex)
 						continue
-					
+
 					if cnkk =='builtin_function_or_method':
 							# qt 3...
 							kk(v)
@@ -282,11 +284,11 @@ class Miki():
 
 	def addChild(self,p,c):
 		cc=c.__class__.__name__
-		
+
 		if str(c.__class__).startswith("<type 'PySide.QtGui."):
 			p.layout.addWidget(c)
 			return
-		
+
 		if cc.startswith('So'):
 			p.addChild(c)
 			return
@@ -300,9 +302,9 @@ class Miki():
 			z.append(c)
 			p.Links=z
 		else:
-			try: 
+			try:
 				p.addObject(c)
-			except: 
+			except:
 				FreeCAD.Console.PrintError("\naddObject funktioniert nicht")
 				FreeCAD.Console.PrintError([p,c])
 

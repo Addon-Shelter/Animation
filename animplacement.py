@@ -1,5 +1,7 @@
+# SPDX-License-Identifier: LGPL-2.1-or-later
+
 #-------------------------------------------------
-#-- 
+#--
 #--
 #-- microelly 2015
 #--
@@ -9,7 +11,7 @@
 
 import FreeCAD,PySide,os,FreeCADGui
 from PySide import QtCore, QtGui, QtSvg
-from PySide.QtGui import * 
+from PySide.QtGui import *
 
 __vers__='0.1'
 
@@ -79,7 +81,7 @@ def create(name,target,src=None):
 	c3.addProperty("App::PropertyVector","RotAxis","Parameter","")
 	c3.RotAxis=FreeCAD.Vector(0,0,1)
 
-	# functions 
+	# functions
 	c3.addProperty("App::PropertyString","x","Functions","")
 	c3.x="x0+(x1-x0)*time"
 	c3.addProperty("App::PropertyString","y","Functions","")
@@ -99,14 +101,14 @@ class _AnimPlacement():
 	def __init__(self,obj):
 		obj.Proxy = self
 		self.Type = "_AnimPlacement"
-		self.obj2 = obj 
+		self.obj2 = obj
 		self.Lock=False
 		self.Changed=False
 
 	def execute(self,obj):
 		if self.obj2.ViewObject.Visibility == False:
 			return
-			
+
 		if self.Changed:
 			say("self changed")
 			# ignore self changes
@@ -141,7 +143,7 @@ class _AnimPlacement():
 			sx=self.obj2.src.Placement.Base.x
 			sy=self.obj2.src.Placement.Base.y
 			sz=self.obj2.src.Placement.Base.z
-			
+
 			srx=self.obj2.src.Placement.Rotation.Axis.x
 			sry=self.obj2.src.Placement.Rotation.Axis.y
 			srz=self.obj2.src.Placement.Rotation.Axis.z
@@ -180,7 +182,7 @@ class _AnimPlacement():
 	def onBeforeChange(self,obj,prop):
 		pass
 #		say("on before change")
-	
+
 	def initialize(self):
 			say("initialize")
 
@@ -192,10 +194,10 @@ class _AnimPlacement():
 			say(self)
 
 class _ViewProviderAnimPlacement(object):
- 
+
 	def getIcon(self):
 		return __dir__ +'/icons/sun.png'
-   
+
 	def __init__(self,vobj):
 		say("__init__" + str(self))
 		self.Object = vobj.Object
@@ -222,7 +224,7 @@ class _ViewProviderAnimPlacement(object):
 	def __setstate__(self,state):
 		say("setstate " + str(self) + str(state))
 		return None
-		
+
 	def setEdit(self,vobj,mode=0):
 		s=TimeWidget(self)
 		self.dialog=s
@@ -286,7 +288,7 @@ class TimeWidget(QtGui.QWidget):
 
 '''
 
-The next generation of animation tools will support formulas and 
+The next generation of animation tools will support formulas and
 allow to move the timeline forward an backward by hand
 
 '''
@@ -299,7 +301,7 @@ if __name__ == "__main__":
 	box=App.ActiveDocument.addObject("Part::Box","Bax")
 	t=create("Anim "+box.Label,box)
 	box.ViewObject.ShapeColor=(.0,1.0,.0)
-	# linear function - left upper corner to right bottom 
+	# linear function - left upper corner to right bottom
 	t.x0=-150
 	t.x1=150
 	t.y0=150
@@ -377,10 +379,10 @@ if __name__ == "__main__":
 
 
 
-		
+
 
 '''
-# to use 
+# to use
 # 1. install latest version of animation workbench
 
 # 2.  create objects (still without gui support)

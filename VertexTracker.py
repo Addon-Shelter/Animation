@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: LGPL-2.1-or-later
+
 #-------------------------------------------------
 #-- animation workbench  vertex tracker
 #--
@@ -8,7 +10,7 @@
 
 import FreeCAD,PySide,os,FreeCADGui
 from PySide import QtCore, QtGui, QtSvg
-from PySide.QtGui import * 
+from PySide.QtGui import *
 import Part
 import Draft
 
@@ -25,7 +27,7 @@ import Toucher
 reload(Toucher)
 
 __vers__='0.1 06.12.2015'
-__dir__ = os.path.dirname(__file__)	
+__dir__ = os.path.dirname(__file__)
 
 
 def createVertexTracker(name,src=None,filename="/tmp/tracker"):
@@ -78,7 +80,7 @@ class _VertexTracker(Animation._Actor):
 		i=0
 		for v in s.Shape.Vertexes:
 			i += 1
-			if i > 5: break 
+			if i > 5: break
 			say(["Point: ", v.Point])
 			FreeCADGui.updateGui()
 			self.addpoint(v.Point)
@@ -118,7 +120,7 @@ class _ViewProviderVertexTracker(Animation._ViewProviderActor):
 		say(self)
 		Animation._ViewProviderActor.__init__(self,vobj)
 		self.attach(vobj)
- 
+
 	def getIcon(self):
 		return '/usr/lib/freecad/Mod/Animation/' +'/icons/icon2.svg'
 		return __dir__ +'/icons/icon2.svg'
