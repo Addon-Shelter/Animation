@@ -6,10 +6,10 @@ reload (flowNode)
 
 
 if App.ActiveDocument==None:
-	App.newDocument("Unnamed")
-	App.setActiveDocument("Unnamed")
-	App.ActiveDocument=App.getDocument("Unnamed")
-	Gui.ActiveDocument=Gui.getDocument("Unnamed")
+    App.newDocument("Unnamed")
+    App.setActiveDocument("Unnamed")
+    App.ActiveDocument=App.getDocument("Unnamed")
+    Gui.ActiveDocument=Gui.getDocument("Unnamed")
 
 
 b=App.ActiveDocument.addObject("Part::Box","Box")

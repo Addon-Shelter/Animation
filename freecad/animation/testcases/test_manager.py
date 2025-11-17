@@ -5,7 +5,7 @@
 
 
 def isequal(a,b):
-	return abs(a-b)<1e-6
+    return abs(a-b)<1e-6
 
 
 from Animation import *

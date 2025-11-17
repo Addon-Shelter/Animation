@@ -20,84 +20,84 @@ __dir__ = os.path.dirname(__file__)
 
 
 def createPather(name='My Pather',src=None):
-	obj = FreeCAD.ActiveDocument.addObject("App::DocumentObjectGroupPython",name)
-	obj.addProperty("App::PropertyLink","src","Base","").src=src
-	obj.addProperty("App::PropertyFloat","time","Base","").time=0
+    obj = FreeCAD.ActiveDocument.addObject("App::DocumentObjectGroupPython",name)
+    obj.addProperty("App::PropertyLink","src","Base","").src=src
+    obj.addProperty("App::PropertyFloat","time","Base","").time=0
 
-	obj.addProperty("App::PropertyLinkList","followers","Base","")
-	obj.addProperty("App::PropertyPlacement","Placement","Results","")
+    obj.addProperty("App::PropertyLinkList","followers","Base","")
+    obj.addProperty("App::PropertyPlacement","Placement","Results","")
 
-	_Pather(obj)
-	_ViewProviderPather(obj.ViewObject)
-	return obj
+    _Pather(obj)
+    _ViewProviderPather(obj.ViewObject)
+    return obj
 
 class _Pather(Animation._Actor):
-	''' placement from path '''
+    ''' placement from path '''
 
-	def update(self):
-		try:
-			self.path
-		except:
-			self.path=[]
+    def update(self):
+        try:
+            self.path
+        except:
+            self.path=[]
 
-		# w=App.ActiveDocument.BSpline003
-		#pl=[]
-		#for n in range(101):
-		#	kk=w.Shape.LastParameter/100*n
-		#	p=w.Shape.valueAt(kk)
-		#	pl.append(p)
-		#
-		#w=Draft.makeWire(pl)
-		w=self.obj2.src
+        # w=App.ActiveDocument.BSpline003
+        #pl=[]
+        #for n in range(101):
+        #    kk=w.Shape.LastParameter/100*n
+        #    p=w.Shape.valueAt(kk)
+        #    pl.append(p)
+        #
+        #w=Draft.makeWire(pl)
+        w=self.obj2.src
 
-		#kk=w.Shape.LastParameter*self.obj2.time
-		#p=w.Shape.valueAt(kk)
+        #kk=w.Shape.LastParameter*self.obj2.time
+        #p=w.Shape.valueAt(kk)
 
-		try:
-			p=w.Shape.Wires[0].discretize(101)[int(round(100*self.obj2.time))]
-		except:
-			p=w.Shape.discretize(101)[int(round(100*self.obj2.time))]
+        try:
+            p=w.Shape.Wires[0].discretize(101)[int(round(100*self.obj2.time))]
+        except:
+            p=w.Shape.discretize(101)[int(round(100*self.obj2.time))]
 
-		self.obj2.Placement.Base=p
-		if self.obj2.followers:
-			for f in self.obj2.followers:
-		#	FreeCAD.ActiveDocument.Ergebnis.Proxy.execute(FreeCAD.ActiveDocument.Ergebnis)
-				f.Proxy.execute(f)
+        self.obj2.Placement.Base=p
+        if self.obj2.followers:
+            for f in self.obj2.followers:
+        #    FreeCAD.ActiveDocument.Ergebnis.Proxy.execute(FreeCAD.ActiveDocument.Ergebnis)
+                f.Proxy.execute(f)
 
-	def step(self,now):
-			say("step "+str(now) + str(self))
-			self.obj2.time=float(now)/100
+    def step(self,now):
+            say("step "+str(now) + str(self))
+            self.obj2.time=float(now)/100
 
 
 
 class _ViewProviderPather(Animation._ViewProviderActor):
 
-	def getIcon(self):
-		return __dir__ +'/icons/pather.png'
+    def getIcon(self):
+        return __dir__ +'/icons/pather.png'
 
-	def attach(self,vobj):
-		self.emenu=[]
-		self.cmenu=[]
-		say("attach " + str(vobj.Object.Label))
-		self.Object = vobj.Object
-		self.obj2=self.Object
-		self.Object.Proxy.Lock=False
-		self.Object.Proxy.Changed=False
-		icon='/icons/combiner.png'
-		self.iconpath = __dir__ + icon
-		self.vers=__vers__
-		return
+    def attach(self,vobj):
+        self.emenu=[]
+        self.cmenu=[]
+        say("attach " + str(vobj.Object.Label))
+        self.Object = vobj.Object
+        self.obj2=self.Object
+        self.Object.Proxy.Lock=False
+        self.Object.Proxy.Changed=False
+        icon='/icons/combiner.png'
+        self.iconpath = __dir__ + icon
+        self.vers=__vers__
+        return
 
-	def edit(self):
-		self.dialog=EditWidget(self,self.emenu)
-		self.dialog.show()
+    def edit(self):
+        self.dialog=EditWidget(self,self.emenu)
+        self.dialog.show()
 
-	def showVersion(self):
-		cl=self.Object.Proxy.__class__.__name__
-		PySide.QtGui.QMessageBox.information(None, "About ", "Animation" + cl +" Node\nVersion " + __vers__ )
+    def showVersion(self):
+        cl=self.Object.Proxy.__class__.__name__
+        PySide.QtGui.QMessageBox.information(None, "About ", "Animation" + cl +" Node\nVersion " + __vers__ )
 
-	def dialer(self):
-		self.obj2.time=float(self.widget.dial.value())/100
-		FreeCAD.ActiveDocument.recompute()
+    def dialer(self):
+        self.obj2.time=float(self.widget.dial.value())/100
+        FreeCAD.ActiveDocument.recompute()
 
 

@@ -7,9 +7,9 @@ import Animation,Draft, Pather, Placer
 
 box=App.ActiveDocument.addObject("Part::Box","Box")
 points=[FreeCAD.Vector(22.0,6.0,0.0),
-	FreeCAD.Vector(8.,60.5,0.0),
-	FreeCAD.Vector(-20,-27.3,0.0),
-	FreeCAD.Vector(16.32,-41.3,0.0)]
+    FreeCAD.Vector(8.,60.5,0.0),
+    FreeCAD.Vector(-20,-27.3,0.0),
+    FreeCAD.Vector(16.32,-41.3,0.0)]
 bspline=Draft.makeBSpline(points)
 
 pa=Pather.createPather('BSpline as Path')

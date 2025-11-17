@@ -27,30 +27,30 @@ import os,random,time,sys,traceback
 
 
 def log(s):
-	logon = False
-	if logon:
-		f = open('/tmp/log.txt', 'a')
-		f.write(str(s) +'\n')
-		f.close()
+    logon = False
+    if logon:
+        f = open('/tmp/log.txt', 'a')
+        f.write(str(s) +'\n')
+        f.close()
 
 def sayd(s):
-	if hasattr(FreeCAD,'animation_debug'):
-		pass
-		log(str(s))
-		FreeCAD.Console.PrintMessage(str(s)+"\n")
+    if hasattr(FreeCAD,'animation_debug'):
+        pass
+        log(str(s))
+        FreeCAD.Console.PrintMessage(str(s)+"\n")
 
 def say(s):
-	log(str(s))
-	FreeCAD.Console.PrintMessage(str(s)+"\n")
+    log(str(s))
+    FreeCAD.Console.PrintMessage(str(s)+"\n")
 
 def sayErr(s):
-	log(str(s))
-	FreeCAD.Console.PrintError(str(s)+"\n")
+    log(str(s))
+    FreeCAD.Console.PrintError(str(s)+"\n")
 
 
 def sayW(s):
-	log(str(s))
-	FreeCAD.Console.PrintWarning(str(s)+"\n")
+    log(str(s))
+    FreeCAD.Console.PrintWarning(str(s)+"\n")
 
 
 def errorDialog(msg):
@@ -60,9 +60,9 @@ def errorDialog(msg):
 
 
 def sayexc(mess=''):
-	exc_type, exc_value, exc_traceback = sys.exc_info()
-	ttt=repr(traceback.format_exception(exc_type, exc_value,exc_traceback))
-	lls=eval(ttt)
-	l=len(lls)
-	l2=lls[(l-3):]
-	FreeCAD.Console.PrintError(mess + "\n" +"-->  ".join(l2))
+    exc_type, exc_value, exc_traceback = sys.exc_info()
+    ttt=repr(traceback.format_exception(exc_type, exc_value,exc_traceback))
+    lls=eval(ttt)
+    l=len(lls)
+    l2=lls[(l-3):]
+    FreeCAD.Console.PrintError(mess + "\n" +"-->  ".join(l2))
