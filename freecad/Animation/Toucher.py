@@ -2,7 +2,8 @@
 # SPDX-FileNotice: Part of the Animation addon.
 
 import FreeCAD
-import Animation
+import freecad.Animation.Animation as Animation
+from .Resources import asIcon
 
 import os
 
@@ -28,7 +29,7 @@ class _Toucher(Animation._Actor):
 class _ViewProviderToucher(Animation._ViewProviderActor):
 
     def getIcon(self):
-        return __dir__ + '/icons/animation.png'
+        return asIcon('animation')
 
 def createToucher(name='My_Toucher',target=None,targets=None):
     ''' createToucher(name,target,targets=None) returns an animation node for one target or a list of targets

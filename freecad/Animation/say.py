@@ -13,7 +13,7 @@ from PySide import QtCore, QtGui
 
 import Draft
 import Part
-import Animation
+import freecad.Animation.Animation as Animation
 
 import numpy as np
 

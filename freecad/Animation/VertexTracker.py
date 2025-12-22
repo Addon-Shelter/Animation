@@ -8,14 +8,16 @@ from PySide import QtCore, QtGui
 from PySide.QtGui import *
 import Part
 import Draft
+from .Resources import asIcon
 
 from FreeCAD import activeDocument
 
 import os
 
-import FreeCAD, Animation, PySide
-from Animation import say
-from  EditWidget import EditNoDialWidget
+import FreeCAD, PySide
+import freecad.Animation.Animation as Animation
+from freecad.Animation.Animation import say
+from freecad.Animation.EditWidget import EditNoDialWidget
 import Toucher
 reload(Toucher)
 
@@ -133,8 +135,8 @@ class _ViewProviderVertexTracker(Animation._ViewProviderActor):
         self.attach(vobj)
 
     def getIcon(self):
-        return '/usr/lib/freecad/Mod/Animation/' +'/icons/icon2.svg'
-        return __dir__ +'/icons/icon2.svg'
+        return '/usr/lib/freecad/Mod/Animation/' +'icon2')
+        return asIcon('icon2')
 
     def attach(self,vobj):
         self.emenu=[['Show Path Data',self.Object.Proxy.show],['Generate Path',self.Object.Proxy.gen]]

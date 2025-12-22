@@ -4,7 +4,7 @@
 App.setActiveDocument("Unnamed")
 App.ActiveDocument=App.getDocument("Unnamed")
 Gui.ActiveDocument=Gui.getDocument("Unnamed")
-import Animation
+import freecad.Animation.Animation as Animation
 Animation.createManager()
 
 App.ActiveDocument.addObject("Part::Box","Box")

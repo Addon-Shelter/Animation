@@ -6,6 +6,7 @@ import FreeCADGui
 import PySide
 from PySide import QtGui
 import os
+from .Resources import asIcon
 
 App=FreeCAD
 Gui=FreeCAD.Gui
@@ -349,8 +350,7 @@ class ViewProvider:
         return None
 
     def getIcon(self):
-        __dir__ = os.path.dirname(__file__)
-        return  __dir__+ '/icons/abroller.png'
+        return asIcon('abroller')
 
 #-------------------------------
 

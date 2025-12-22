@@ -4,9 +4,11 @@
 
 import math,os
 
-import FreeCAD, FreeCADGui, Animation, PySide
-from Animation import say,sayErr,sayexc
-from  EditWidget import EditWidget
+import FreeCAD, FreeCADGui, PySide
+import freecad.Animation.Animation as Animation
+from freecad.Animation.Animation import say,sayErr,sayexc
+from freecad.Animation.EditWidget import EditWidget
+from .Resources import asIcon
 
 __vers__= '0.1'
 __dir__ = os.path.dirname(__file__)
@@ -184,8 +186,8 @@ class _ViewProviderPlacer(Animation._ViewProviderActor):
         self.Object.Proxy.Lock=False
         self.Object.Proxy.Changed=False
         self.touchTarget=True
-        icon='/icons/placer.png'
-        self.iconpath = __dir__ + icon
+        icon='placer'
+        self.iconpath = asIcon(icon)
         return
 
     def setupContextMenu(self, obj, menu):

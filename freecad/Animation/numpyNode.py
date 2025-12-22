@@ -6,7 +6,7 @@ __vers__="08.04.2016  0.2"
 
 import say
 reload(say)
-from say import *
+from .say import *
 
 import sys
 import os
@@ -16,11 +16,10 @@ import time
 
 __dir__ = os.path.dirname(__file__)
 
-import Animation
-
+import freecad.Animation.Animation as Animation
 class _NP(Animation._Actor):
 
-    def __init__(self,obj,icon='/icons/animation.png'):
+    def __init__(self,obj,icon='animation'):
         obj.Proxy = self
         self.Type = self.__class__.__name__
         self.obj2 = obj
@@ -74,7 +73,7 @@ class _ViewProviderNP(Animation._ViewProviderActor):
 
 
     def getIcon(self):
-        return  __dir__+ '/icons/icon2.svg'
+        return  __dir__+ 'icon2')
 
     def createDialog(self):
         pass

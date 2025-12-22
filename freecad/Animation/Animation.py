@@ -8,18 +8,22 @@ __author__ = "Thomas Gundermann"
 __url__ = "http://www.freecadbuch.de"
 
 import matplotlib
-matplotlib.use('Qt4Agg')
-matplotlib.rcParams['backend.qt4']='PySide'
+matplotlib.use('QtAgg')
+# print('Keys',matplotlib.rcParams.keys())
+# matplotlib.rcParams['backend.qtagg']='PySide'
 
-import FreeCAD, Part, PartGui, Draft, Drawing , PySide
+import FreeCAD, Part, PartGui, Draft , PySide
 from FreeCAD import Vector,Base
 import math, os, sys
 from math import sqrt, pi, sin, cos, asin
 from PySide import QtGui,QtCore
 
-from EditWidget import EditWidget
+from .EditWidget import EditWidget
 
 from time import *
+from .Resources import asIcon
+
+import freecad.Animation.Animation as Animation
 
 
 
@@ -65,7 +69,7 @@ __dir__ = os.path.dirname(__file__)
 
 class _Actor(object):
 
-    def __init__(self,obj,icon='/icons/animation.png'):
+    def __init__(self,obj,icon='animation'):
         obj.Proxy = self
         self.Type = self.__class__.__name__
         self.obj2 = obj
@@ -162,8 +166,8 @@ class _Actor(object):
 
 class _ViewProviderActor():
 
-    def __init__(self,vobj,icon='/icons/mover.png'):
-        self.iconpath = __dir__ + icon
+    def __init__(self,vobj,icon='mover'):
+        self.iconpath = asIcon(icon)
         self.Object = vobj.Object
         vobj.Proxy = self
 
@@ -175,8 +179,8 @@ class _ViewProviderActor():
         self.cmenu=[]
         self.emenu=[]
         self.Object = vobj.Object
-        icon='/icons/animation.png'
-        self.iconpath = __dir__ + icon
+        icon='animation'
+        self.iconpath = asIcon(icon)
 
     def anims(self):
         return [['forward',self.animforward],['backward',self.animbackward],['ping pong',self.animpingpong]]
@@ -283,8 +287,8 @@ def createBounder(name='MyBounder'):
     obj.addProperty("App::PropertyFloat","zmax","intervall","ve")
 
 ## mod
-    _Bounder(obj,'/icons/bounder.png')
-    _ViewProviderActor(obj.ViewObject,'/icons/bounder.png')
+    _Bounder(obj,'bounder')
+    _ViewProviderActor(obj.ViewObject,'bounder')
     return obj
 
 
@@ -373,7 +377,7 @@ class _Viewpoint(_Actor):
         self.obj2=obj
         obj.Proxy = self
         self.Type = "_Viewpoint"
-        _ViewProviderActor(obj.ViewObject,'/icons/viewpoint.png')
+        _ViewProviderActor(obj.ViewObject,'viewpoint')
 
     def step(self,now):
         from pivy import coin
@@ -471,7 +475,7 @@ class _Extruder(_Actor):
         self.obj2=obj
         obj.Proxy = self
         self.Type = "_Extruder"
-        _ViewProviderActor(obj.ViewObject,'/icons/extruder.png')
+        _ViewProviderActor(obj.ViewObject,'extruder')
 
     def step(self,now):
         App=FreeCAD
@@ -505,7 +509,7 @@ def createMoviescreen(name='My_Moviescreen'):
 
     obj = FreeCAD.ActiveDocument.addObject("App::DocumentObjectGroupPython",name)
     obj.addProperty("App::PropertyIntegerList","pictureStart","info","Rotationsachse Zentrum relativ").pictureStart=[0,50,100]
-    obj.addProperty("App::PropertyPath","pictures","screen","text").pictures="/home/microelly2/pics/t%04.f.png"
+    obj.addProperty("App::PropertyPath","pictures","screen","text").pictures="/home/microelly2/pics/t%04.f"
     obj.addProperty("App::PropertyLink","rectangle","screen","moving object ")
 
     obj.rectangle = FreeCAD.ActiveDocument.addObject("Part::Part2DObjectPython","Rectangle Moviescreen")
@@ -527,7 +531,7 @@ class _Moviescreen(_Actor):
         self.obj2=obj
         obj.Proxy = self
         self.Type = "_Moviescreen"
-        _ViewProviderActor(obj.ViewObject,'/icons/moviescreen.png')
+        _ViewProviderActor(obj.ViewObject,'moviescreen')
 
     def step(self,now):
         pfn=self.obj2.pictures%now
@@ -564,7 +568,7 @@ class _Billboard(_Actor):
         self.obj2=obj
         obj.Proxy = self
         self.Type = "_Billboard"
-        _ViewProviderActor(obj.ViewObject,'/icons/billboard.png')
+        _ViewProviderActor(obj.ViewObject,'billboard')
         self.Object.Proxy.Lock=False
 
 
@@ -769,7 +773,7 @@ class _ViewProviderMover(_ViewProviderActor):
     "A View Provider for the Mover object"
 
     def getIcon(self):
-        return __dir__ + '/icons/mover.png'
+        return asIcon('mover')
 
 #-------------------------------------
 
@@ -881,7 +885,7 @@ class _Rotator(_Actor):
 
 class _ViewProviderRotator(_ViewProviderActor):
     def getIcon(self):
-        return __dir__ + '/icons/rotator.png'
+        return asIcon('rotator')
 
 
 def createPlugger(name='My_Plugger'):
@@ -1093,7 +1097,7 @@ class _Plugger(_Actor):
 
 class _ViewProviderPlugger(_ViewProviderActor):
     def getIcon(self):
-        return __dir__ + '/icons/plugger.png'
+        return asIcon('plugger')
 
 #---------------------------------------------------------------
 
@@ -1129,7 +1133,7 @@ class _Tranquillizer(_Actor):
 class _ViewProviderTranquillizer(_ViewProviderActor):
 
     def getIcon(self):
-        return __dir__ + '/icons/tranq.png'
+        return asIcon('tranq')
 
 
 #-------------------------------------
@@ -1199,7 +1203,7 @@ class _Adjuster(_Actor):
 class _ViewProviderAdjuster(_ViewProviderActor):
 
     def getIcon(self):
-        return __dir__ + '/icons/adjuster.png'
+        return asIcon('adjuster')
 
 #---------------------------------------------------------------
 def createStyler(name='MyStyler'):
@@ -1272,7 +1276,7 @@ class _Styler(_Actor):
 class _ViewProviderStyler(_ViewProviderActor):
 
     def getIcon(self):
-        return __dir__ + '/icons/styler.png'
+        return asIcon('styler')
 
 
 #---------------------------------------------------------------
@@ -1353,7 +1357,7 @@ class _Photographer(_Actor):
                 FreeCADGui.updateGui()
 
             kf= "%04.f"%now
-            fn=self.obj2.fn+kf+'.png'
+            fn=self.obj2.fn+kf+''
 
             dir = os.path.dirname(fn)
 
@@ -1368,7 +1372,7 @@ class _Photographer(_Actor):
             #FreeCADGui.activeDocument().activeView().saveImage(fn,self.obj2.size_x,self.obj2.size_y,'white')
 
 
-            #fn='/home/thomas/Bilder/bp_111.png'
+            #fn='/home/thomas/Bilder/bp_111'
             self.now=now
             if self.obj2.preview:
                 try:
@@ -1388,7 +1392,7 @@ class _Photographer(_Actor):
 class _ViewProviderPhotographer(_ViewProviderActor):
 
     def getIcon(self):
-        return __dir__ + '/icons/photographer.png'
+        return asIcon('photographer')
 
 
 
@@ -1678,7 +1682,7 @@ def runManager(vobj=None):
         FreeCAD.ActiveDocument.recompute()
     else:
         FreeCAD.ActiveDocument.openTransaction("run Manager")
-        FreeCADGui.doCommand("import Animation")
+        FreeCADGui.doCommand("import freecad.Animation.Animation")
         FreeCADGui.doCommand("M=FreeCADGui.Selection.getSelectionEx()")
         FreeCADGui.doCommand("tt=M[0].Object")
         FreeCADGui.doCommand("print(tt)")
@@ -1735,7 +1739,7 @@ def unloopManager(vobj=None):
 class _ViewProviderManager(_ViewProviderActor):
 
     def getIcon(self):
-        return __dir__ + '/icons/manager.png'
+        return asIcon('manager')
 
     def doubleClicked(self,vobj):
         FreeCAD.tt=self
@@ -1804,7 +1808,7 @@ def reinit():
 class _Starter:
     ''' Re initialisierung einer geladenen Datei'''
     def GetResources(self):
-        return {'Pixmap' : __dir__ + '/icons/reset.png', 'MenuText': 'ReInitialize', 'ToolTip': 'Re-Initialize after Loading'}
+        return {'Pixmap' : asIcon('reset'), 'MenuText': 'ReInitialize', 'ToolTip': 'Re-Initialize after Loading'}
 
     def IsActive(self):
         if FreeCADGui.ActiveDocument:
@@ -1822,10 +1826,8 @@ if FreeCAD.GuiUp:
 class _Runner:
     ''' Manager als Transaktion laufen lassen'''
     def GetResources(self):
-        # return {'Pixmap' : __dir__ + '/icons/animation.png', 'MenuText': 'Run Manager', 'ToolTip': 'Run Manager'}
-        return {'Pixmap' : __dir__ + '/icons/animation.png', 'MenuText': 'Run Manager', 'ToolTip': 'Run Manager'}
-        return {'Pixmap' : '../Mod/Animation/icons/animation.png', 'MenuText': 'Run Manager', 'ToolTip': 'Run Manager'}
-        return False
+        # return {'Pixmap' : asIcon('animation', 'MenuText': 'Run Manager', 'ToolTip': 'Run Manager'}
+        return {'Pixmap' : asIcon('animation'), 'MenuText': 'Run Manager', 'ToolTip': 'Run Manager'}
 
     def IsActive(self):
         if FreeCADGui.ActiveDocument:
@@ -1846,7 +1848,7 @@ class _Runner:
             errorDialog("Manager auswahlen")
         else:
             FreeCAD.ActiveDocument.openTransaction("run Manager")
-            FreeCADGui.doCommand("import Animation")
+            FreeCADGui.doCommand("import freecad.Animation.Animation")
             FreeCADGui.doCommand("M=FreeCADGui.Selection.getSelectionEx()")
             FreeCADGui.doCommand("tt=M[0].Object")
             FreeCADGui.doCommand("print(tt)")
@@ -1864,7 +1866,7 @@ if FreeCAD.GuiUp:
 
 class _B1:
     def GetResources(self):
-        return {'Pixmap' : __dir__ + '/icons/icon1.svg', 'MenuText': 'B1', 'ToolTip': 'B1'}
+        return {'Pixmap' : asIcon('icon1'), 'MenuText': 'B1', 'ToolTip': 'B1'}
     def IsActive(self):
         return False
     def Activated(self):
@@ -1872,7 +1874,7 @@ class _B1:
 
 class _B2:
     def GetResources(self):
-        return {'Pixmap' : __dir__ + '/icons/icon2.svg', 'MenuText': 'B2', 'ToolTip': 'B2'}
+        return {'Pixmap' : asIcon('icon2'), 'MenuText': 'B2', 'ToolTip': 'B2'}
     def IsActive(self):
         return False
     def Activated(self):
@@ -1880,7 +1882,7 @@ class _B2:
 
 class _B3:
     def GetResources(self):
-        return {'Pixmap' : __dir__ + '/icons/icon3.svg', 'MenuText': 'Edit Object', 'ToolTip': 'Edit Object'}
+        return {'Pixmap' : asIcon('icon3'), 'MenuText': 'Edit Object', 'ToolTip': 'Edit Object'}
     def IsActive(self):
         return False
     def Activated(self):
@@ -1958,7 +1960,7 @@ class _ViewProviderScriptAction(object):
 
 
     def getIcon(self):
-        return __dir__ + '/icons/scriptaction.png'
+        return asIcon('scriptaction')
 
     def __init__(self,vobj):
         vobj.Proxy = self
@@ -2004,7 +2006,7 @@ def createScriptAction(name='My_ScriptAction'):
 
 class _CommandScriptAction:
     def GetResources(self):
-        return {'Pixmap' : __dir__ + '/icons/scriptaction.png', 'MenuText': 'Script Action generic', 'ToolTip': 'SA-TT'}
+        return {'Pixmap' : asIcon('scriptaction'), 'MenuText': 'Script Action generic', 'ToolTip': 'SA-TT'}
 
     def IsActive(self):
         if FreeCADGui.ActiveDocument:
@@ -2015,8 +2017,8 @@ class _CommandScriptAction:
     def Activated(self):
         if FreeCADGui.ActiveDocument:
             FreeCAD.ActiveDocument.openTransaction("create Manager")
-            FreeCADGui.doCommand("import Animation")
-            FreeCADGui.doCommand("Animation.createScriptAction()")
+            FreeCADGui.doCommand("import freecad.Animation.Animation")
+            FreeCADGui.doCommand("freecad.Animation.Animation.createScriptAction()")
             say("I create a Script-Action")
             FreeCAD.ActiveDocument.commitTransaction()
             FreeCAD.ActiveDocument.recompute()
@@ -2038,7 +2040,7 @@ class _ViewProviderLoopAction(_ViewProviderScriptAction):
     "A View Provider for the Mover object"
 
     def getIcon(self):
-        return __dir__ + '/icons/loopaction.png'
+        return asIcon('loopaction')
 
 
 def createLoopAction(name='My_LoopAction'):
@@ -2050,7 +2052,7 @@ def createLoopAction(name='My_LoopAction'):
 
 class _CommandLoopAction:
     def GetResources(self):
-        return {'Pixmap' : __dir__ + '/icons/loopaction.png', 'MenuText': 'Loop', 'ToolTip': 'LA-TT'}
+        return {'Pixmap' : asIcon('loopaction'), 'MenuText': 'Loop', 'ToolTip': 'LA-TT'}
 
     def IsActive(self):
         if FreeCADGui.ActiveDocument:
@@ -2061,8 +2063,8 @@ class _CommandLoopAction:
     def Activated(self):
         if FreeCADGui.ActiveDocument:
             FreeCAD.ActiveDocument.openTransaction("create Manager")
-            FreeCADGui.doCommand("import Animation")
-            FreeCADGui.doCommand("Animation.createLoopAction()")
+            FreeCADGui.doCommand("import freecad.Animation.Animation")
+            FreeCADGui.doCommand("freecad.Animation.Animation.createLoopAction()")
             say("I create a Loop-Action")
             FreeCAD.ActiveDocument.commitTransaction()
             FreeCAD.ActiveDocument.recompute()
@@ -2082,7 +2084,7 @@ class _ViewProviderWhileAction(_ViewProviderScriptAction):
     "A View Provider for the Mover object"
 
     def getIcon(self):
-        return __dir__ + '/icons/whileaction.png'
+        return asIcon('whileaction')
 
 
 def createWhileAction(name='My_WhileAction'):
@@ -2094,7 +2096,7 @@ def createWhileAction(name='My_WhileAction'):
 
 class _CommandWhileAction:
     def GetResources(self):
-        return {'Pixmap' : __dir__ + '/icons/whileaction.png', 'MenuText': 'while do', 'ToolTip': 'LA-TT'}
+        return {'Pixmap' : asIcon('whileaction'), 'MenuText': 'while do', 'ToolTip': 'LA-TT'}
 
     def IsActive(self):
         if FreeCADGui.ActiveDocument:
@@ -2105,8 +2107,8 @@ class _CommandWhileAction:
     def Activated(self):
         if FreeCADGui.ActiveDocument:
             FreeCAD.ActiveDocument.openTransaction("create Manager")
-            FreeCADGui.doCommand("import Animation")
-            FreeCADGui.doCommand("Animation.createWhileAction()")
+            FreeCADGui.doCommand("import freecad.Animation.Animation")
+            FreeCADGui.doCommand("freecad.Animation.Animation.createWhileAction()")
             say("I create a While-Action")
             FreeCAD.ActiveDocument.commitTransaction()
             FreeCAD.ActiveDocument.recompute()
@@ -2126,7 +2128,7 @@ class _ViewProviderRepeatAction(_ViewProviderScriptAction):
     "A View Provider for the Mover object"
 
     def getIcon(self):
-        return __dir__ + '/icons/repeataction.png'
+        return asIcon('repeataction')
 
 
 def createRepeatAction(name='My_RepeatAction'):
@@ -2138,7 +2140,7 @@ def createRepeatAction(name='My_RepeatAction'):
 
 class _CommandRepeatAction:
     def GetResources(self):
-        return {'Pixmap' : __dir__ + '/icons/repeataction.png', 'MenuText': 'Repeat until', 'ToolTip': 'LA-TT'}
+        return {'Pixmap' : asIcon('repeataction'), 'MenuText': 'Repeat until', 'ToolTip': 'LA-TT'}
 
     def IsActive(self):
         if FreeCADGui.ActiveDocument:
@@ -2149,8 +2151,8 @@ class _CommandRepeatAction:
     def Activated(self):
         if FreeCADGui.ActiveDocument:
             FreeCAD.ActiveDocument.openTransaction("create Manager")
-            FreeCADGui.doCommand("import Animation")
-            FreeCADGui.doCommand("Animation.createRepeatAction()")
+            FreeCADGui.doCommand("import freecad.Animation.Animation")
+            FreeCADGui.doCommand("freecad.Animation.Animation.createRepeatAction()")
             say("I create a Repeat-Action")
             FreeCAD.ActiveDocument.commitTransaction()
             FreeCAD.ActiveDocument.recompute()
@@ -2175,7 +2177,7 @@ class _ViewProviderFalseAction(_ViewProviderScriptAction):
     "A View Provider for the Mover object"
 
     def getIcon(self):
-        return __dir__ + '/icons/falseaction.png'
+        return asIcon('falseaction')
 
 
 def createFalseAction(name='My_FalseAction'):
@@ -2187,7 +2189,7 @@ def createFalseAction(name='My_FalseAction'):
 
 class _CommandFalseAction:
     def GetResources(self):
-        return {'Pixmap' : __dir__ + '/icons/falseaction.png', 'MenuText': 'If else', 'ToolTip': 'LA-TT'}
+        return {'Pixmap' : asIcon('falseaction'), 'MenuText': 'If else', 'ToolTip': 'LA-TT'}
 
     def IsActive(self):
         if FreeCADGui.ActiveDocument:
@@ -2198,8 +2200,8 @@ class _CommandFalseAction:
     def Activated(self):
         if FreeCADGui.ActiveDocument:
             FreeCAD.ActiveDocument.openTransaction("create Manager")
-            FreeCADGui.doCommand("import Animation")
-            FreeCADGui.doCommand("Animation.createFalseAction()")
+            FreeCADGui.doCommand("import freecad.Animation.Animation")
+            FreeCADGui.doCommand("freecad.Animation.Animation.createFalseAction()")
             say("I create a False-Action")
             FreeCAD.ActiveDocument.commitTransaction()
             FreeCAD.ActiveDocument.recompute()
@@ -2225,7 +2227,7 @@ class _ViewProviderTrueAction(_ViewProviderScriptAction):
     "A View Provider for the Mover object"
 
     def getIcon(self):
-        return __dir__ + '/icons/trueaction.png'
+        return asIcon('trueaction')
 
 
 def createTrueAction(name='My_TrueAction'):
@@ -2237,7 +2239,7 @@ def createTrueAction(name='My_TrueAction'):
 
 class _CommandTrueAction:
     def GetResources(self):
-        return {'Pixmap' : __dir__ + '/icons/trueaction.png', 'MenuText': 'If then', 'ToolTip': 'LA-TT'}
+        return {'Pixmap' : asIcon('trueaction'), 'MenuText': 'If then', 'ToolTip': 'LA-TT'}
 
     def IsActive(self):
         if FreeCADGui.ActiveDocument:
@@ -2248,8 +2250,8 @@ class _CommandTrueAction:
     def Activated(self):
         if FreeCADGui.ActiveDocument:
             FreeCAD.ActiveDocument.openTransaction("create Manager")
-            FreeCADGui.doCommand("import Animation")
-            FreeCADGui.doCommand("Animation.createTrueAction()")
+            FreeCADGui.doCommand("import freecad.Animation.Animation")
+            FreeCADGui.doCommand("freecad.Animation.Animation.createTrueAction()")
             say("I create a True-Action")
             FreeCAD.ActiveDocument.commitTransaction()
             FreeCAD.ActiveDocument.recompute()
@@ -2269,7 +2271,7 @@ class _ViewProviderCaseAction(_ViewProviderScriptAction):
     "A View Provider for the Mover object"
 
     def getIcon(self):
-        return __dir__ + '/icons/caseaction.png'
+        return asIcon('caseaction')
 
 
 def createCaseAction(name='My_CaseAction'):
@@ -2281,7 +2283,7 @@ def createCaseAction(name='My_CaseAction'):
 
 class _CommandCaseAction:
     def GetResources(self):
-        return {'Pixmap' : __dir__ + '/icons/caseaction.png', 'MenuText': 'Case', 'ToolTip': 'LA-TT'}
+        return {'Pixmap' : asIcon('caseaction'), 'MenuText': 'Case', 'ToolTip': 'LA-TT'}
 
     def IsActive(self):
         if FreeCADGui.ActiveDocument:
@@ -2292,8 +2294,8 @@ class _CommandCaseAction:
     def Activated(self):
         if FreeCADGui.ActiveDocument:
             FreeCAD.ActiveDocument.openTransaction("create Manager")
-            FreeCADGui.doCommand("import Animation")
-            FreeCADGui.doCommand("Animation.createCaseAction()")
+            FreeCADGui.doCommand("import freecad.Animation.Animation")
+            FreeCADGui.doCommand("freecad.Animation.Animation.createCaseAction()")
             say("I create a Case-Action")
             FreeCAD.ActiveDocument.commitTransaction()
             FreeCAD.ActiveDocument.recompute()
@@ -2313,7 +2315,7 @@ class _ViewProviderQueryAction(_ViewProviderScriptAction):
     "A View Provider for the Mover object"
 
     def getIcon(self):
-        return __dir__ + '/icons/queryaction.png'
+        return asIcon('queryaction')
 
 def createQueryAction(name='My_QueryAction'):
     '''creatQueryAction(name)'''
@@ -2324,7 +2326,7 @@ def createQueryAction(name='My_QueryAction'):
 
 class _CommandQueryAction:
     def GetResources(self):
-        return {'Pixmap' : __dir__ + '/icons/queryaction.png', 'MenuText': 'Question', 'ToolTip': 'LA-TT'}
+        return {'Pixmap' : asIcon('queryaction'), 'MenuText': 'Question', 'ToolTip': 'LA-TT'}
 
     def IsActive(self):
         if FreeCADGui.ActiveDocument:
@@ -2335,8 +2337,8 @@ class _CommandQueryAction:
     def Activated(self):
         if FreeCADGui.ActiveDocument:
             FreeCAD.ActiveDocument.openTransaction("create Manager")
-            FreeCADGui.doCommand("import Animation")
-            FreeCADGui.doCommand("Animation.createQueryAction()")
+            FreeCADGui.doCommand("import freecad.Animation.Animation")
+            FreeCADGui.doCommand("freecad.Animation.Animation.createQueryAction()")
             FreeCAD.ActiveDocument.commitTransaction()
             FreeCAD.ActiveDocument.recompute()
         else:
@@ -2566,7 +2568,7 @@ class _Filler(_Actor):
 class _ViewProviderFiller(_ViewProviderActor):
 
     def getIcon(self):
-        return __dir__ + '/icons/filler.png'
+        return asIcon('filler')
 
 
 
@@ -2642,5 +2644,5 @@ def showimage(fn):
     return mpl
 
 
-#fn='/home/thomas/Bilder/bp_111.png'
+#fn='/home/thomas/Bilder/bp_111'
 #rc=showimage(fn)

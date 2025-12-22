@@ -8,7 +8,7 @@ def isequal(a,b):
     return abs(a-b)<1e-6
 
 import FreeCAD
-import Animation
+import freecad.Animation.Animation as Animation
 import Placer
 
 FreeCAD.newDocument("Unbenannt")

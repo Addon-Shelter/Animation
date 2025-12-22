@@ -6,9 +6,11 @@ import math,os
 import numpy
 from numpy import pi,cos,tan,arctan
 
-import FreeCAD, FreeCADGui, Animation, PySide
-from Animation import say,sayErr,sayexc
-from  EditWidget import EditWidget
+import FreeCAD, FreeCADGui, PySide
+import freecad.Animation.Animation as Animation
+from freecad.Animation.Animation import say,sayErr,sayexc
+from freecad.Animation.EditWidget import EditWidget
+from .Resources import asIcon
 
 __vers__= '0.2'
 __dir__ = os.path.dirname(__file__)
@@ -204,7 +206,7 @@ class _Kartan(Animation._Actor):
 class _ViewProviderKartan(Animation._ViewProviderActor):
 
     def getIcon(self):
-        return __dir__ + '/icons/kardan.png'
+        return asIcon('kardan')
 
 
 

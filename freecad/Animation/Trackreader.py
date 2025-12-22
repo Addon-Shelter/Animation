@@ -12,16 +12,19 @@ App,Gui=FreeCAD,FreeCADGui
 import Draft,Part
 
 
-import Animation
+import freecad.Animation.Animation as Animation
+from .Resources import asIcon
+
+from .Animation import _ViewProviderActor , _Actor
 
 __vers__='0.1'
 
 
 import math,os
 
-import FreeCAD, Animation, PySide
-from Animation import say,sayErr,sayexc
-from  EditWidget import EditWidget
+import FreeCAD, PySide
+from freecad.Animation.Animation import say,sayErr,sayexc
+from freecad.Animation.EditWidget import EditWidget
 
 __vers__= '0.1'
 __dir__ = os.path.dirname(__file__)
@@ -93,10 +96,10 @@ def interpol2(filename,show=True):
         plt.title('Placement Interpolation Data')
         plt.xlabel('time relative')
         plt.ylabel('Placement Base')
-        plt.savefig(filename +'.png')
+        plt.savefig(filename +'')
         # plt.show()
         import ImageGui
-        ImageGui.open(filename +'.png')
+        ImageGui.open(filename +'')
     #except:
     #    pass
 
@@ -129,7 +132,7 @@ def createTrackReader(name,target,filename):
     _ViewProviderTrackReader(obj.ViewObject)
     return obj
 
-class _TrackReader(Animation._Actor):
+class _TrackReader(_Actor):
 
     def __init__(self,obj):
         obj.Proxy = self
@@ -221,10 +224,10 @@ class _TrackReader(Animation._Actor):
     def step(self,now):
             self.obj2.time=float(now)/100
 
-class _ViewProviderTrackReader(Animation._ViewProviderActor):
+class _ViewProviderTrackReader(_ViewProviderActor):
 
     def getIcon(self):
-        return __dir__ +'/icons/icon3.svg'
+        return asIcon('icon3')
 
     def attach(self,vobj):
         say("attach " + str(vobj.Object.Label))
@@ -269,7 +272,7 @@ class _ViewProviderTrackReader(Animation._ViewProviderActor):
 
 
 
-class _Function(Animation._Actor):
+class _Function(_Actor):
 
     def __init__(self,obj):
         obj.Proxy = self
@@ -409,10 +412,10 @@ class _Function(Animation._Actor):
     def step(self,now):
             self.obj2.time=float(now)
 
-class _ViewProviderFunction(Animation._ViewProviderActor):
+class _ViewProviderFunction(_ViewProviderActor):
 
     def getIcon(self):
-        return __dir__ +'/icons/icon3.svg'
+        return asIcon('icon3')
 
     def attach(self,vobj):
         say("attach " + str(vobj.Object.Label))

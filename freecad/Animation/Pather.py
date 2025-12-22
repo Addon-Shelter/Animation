@@ -3,17 +3,19 @@
 # SPDX-FileNotice: Part of the Animation addon.
 
 import FreeCAD,PySide,os,FreeCADGui
+import freecad.Animation.Animation as Animation
 from PySide import QtCore, QtGui, QtSvg
 from PySide.QtGui import *
 import Part
 
-from  EditWidget import EditWidget
+from freecad.Animation.EditWidget import EditWidget
 
 
 import math,os
 
-import FreeCAD, Animation, PySide
-from Animation import say,sayErr,sayexc
+import FreeCAD, PySide
+from freecad.Animation.Animation import say,sayErr,sayexc
+from .Resources import asIcon
 
 __vers__='0.1 3.12.2015'
 __dir__ = os.path.dirname(__file__)
@@ -73,7 +75,7 @@ class _Pather(Animation._Actor):
 class _ViewProviderPather(Animation._ViewProviderActor):
 
     def getIcon(self):
-        return __dir__ +'/icons/pather.png'
+        return asIcon('pather')
 
     def attach(self,vobj):
         self.emenu=[]
@@ -83,8 +85,8 @@ class _ViewProviderPather(Animation._ViewProviderActor):
         self.obj2=self.Object
         self.Object.Proxy.Lock=False
         self.Object.Proxy.Changed=False
-        icon='/icons/combiner.png'
-        self.iconpath = __dir__ + icon
+        icon='combiner'
+        self.iconpath = asIcon(icon)
         self.vers=__vers__
         return
 

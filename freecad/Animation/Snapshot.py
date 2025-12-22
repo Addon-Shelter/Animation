@@ -2,9 +2,10 @@
 # SPDX-FileNotice: Part of the Animation addon.
 
 import FreeCAD
-import Animation
-from Animation import say,sayErr,sayexc
+import freecad.Animation.Animation as Animation
+from freecad.Animation.Animation import say,sayErr,sayexc
 import os
+from .Resources import asIcon
 
 __vers__= '0.2'
 __dir__ = os.path.dirname(__file__)
@@ -32,8 +33,8 @@ class _Snapshot(Animation._Actor):
 class _ViewProviderSnapshot(Animation._ViewProviderActor):
 
     def getIcon(self):
-        icon='/icons/snapshot.png'
-        return __dir__ + icon
+        icon='snapshot'
+        return asIcon(icon)
 
 def createSnapshot(name='My_Snapshot',seqname='S',target=None,targets=[]):
     '''createSnapshot(name,seqname='S',target=None,targets=[]) returns an animation node for one target or a list of targets
@@ -77,7 +78,7 @@ class _ViewSequence(Animation._Actor):
 class _ViewProviderViewSequence(Animation._ViewProviderActor):
 
     def getIcon(self):
-        return __dir__ + '/icons/snapshotviewer.png'
+        return asIcon('snapshotviewer')
 
 def createViewSequence(name='My_ViewSequence',seqname='S'):
     ''' createViewSequence(name,sequencename) returns an animation node for a sequence list'''

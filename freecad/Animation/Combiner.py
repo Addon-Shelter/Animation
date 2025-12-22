@@ -2,10 +2,11 @@
 # SPDX-FileCopyrightText: 2015 microelly
 # SPDX-FileNotice: Part of the Animation addon.
 
-from say import *
+from .say import *
 import math,os, time
 
-from EditWidget import EditWidget
+from .EditWidget import EditWidget
+from .Resources import asIcon
 
 __vers__= '0.2'
 __dir__ = os.path.dirname(__file__)
@@ -109,8 +110,8 @@ class _ViewProviderCombiner(Animation._ViewProviderActor):
         self.obj2=self.Object
         self.Object.Proxy.Lock=False
         self.Object.Proxy.Changed=False
-        icon='/icons/combiner.png'
-        self.iconpath = __dir__ + icon
+        icon='combiner'
+        self.iconpath = asIcon(icon)
         self.vers=__vers__
         return
 

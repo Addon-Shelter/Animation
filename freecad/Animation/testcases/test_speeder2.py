@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: LGPL-2.1-or-later
 # SPDX-FileNotice: Part of the Animation addon.
 
-import Animation
-from Animation import *
+import freecad.Animation.Animation as Animation
+from freecad.Animation.Animation import *
 reload(Animation)
 
 import Placer

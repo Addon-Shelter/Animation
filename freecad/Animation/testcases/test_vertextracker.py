@@ -3,7 +3,9 @@
 
 
 import FreeCAD
-import Animation, Placer,Toucher, VertexTracker
+import Placer,Toucher, VertexTracker
+
+import freecad.Animation.Animation as Animation
 
 
 

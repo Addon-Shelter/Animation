@@ -18,7 +18,8 @@ def creatorFunction(name):
 
 
 
-import FreeCAD,Animation,FreeCADGui
+import FreeCAD,FreeCADGui
+import freecad.Animation.Animation as Animation
 import re
 import pivy
 from pivy import coin

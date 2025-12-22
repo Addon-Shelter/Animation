@@ -2,8 +2,9 @@
 # SPDX-FileCopyrightText: 2015 microelly
 # SPDX-FileNotice: Part of the Animation addon.
 
-from say import *
+from .say import *
 import math
+from .Resources import asIcon
 
 __vers__= '0.2'
 __dir__ = os.path.dirname(__file__)
@@ -160,8 +161,8 @@ class _ViewProviderSpeeder(Animation._ViewProviderActor):
         self.obj2=self.Object
         self.Object.Proxy.Lock=False
         self.Object.Proxy.Changed=False
-        icon='/icons/animation.png'
-        self.iconpath = __dir__ + icon
+        icon='animation'
+        self.iconpath = asIcon(icon)
         self.vers=__vers__
         return
 

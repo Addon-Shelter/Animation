@@ -7,7 +7,7 @@ def isequal(a,b):
     return abs(a-b)<1e-6
 
 
-from Animation import *
+from freecad.Animation.Animation import *
 reload(Animation)
 
 import Placer

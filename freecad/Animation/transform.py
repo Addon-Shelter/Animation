@@ -5,6 +5,7 @@
 import FreeCAD,PySide,os,FreeCADGui
 from PySide import QtCore, QtGui, QtSvg
 from PySide.QtGui import *
+from .Resources import asIcon
 
 __vers__='0.2'
 
@@ -272,7 +273,7 @@ class _Transform():
 class _ViewProviderTransform(object):
 
     def getIcon(self):
-        return __dir__ +'/icons/sun.png'
+        return asIcon('sun')
 
     def __init__(self,vobj):
         say("__init__" + str(self))
@@ -505,7 +506,7 @@ class _ViewProviderHinge(_ViewProviderTransform):
 class _ViewProviderTelescope(_ViewProviderTransform):
 
     def getIcon(self):
-        return __dir__ +'/icons/mars.png'
+        return asIcon('mars')
 
     def setupContextMenu(self, obj, menu):
 #        action = menu.addAction("About Transform B")
@@ -666,7 +667,7 @@ class _VertexPlugger():
 class _ViewProviderVertexPlugger(object):
 
     def getIcon(self):
-        return __dir__ +'/icons/sun.png'
+        return asIcon('sun')
 
     def __init__(self,vobj):
         say("__init__" + str(self))

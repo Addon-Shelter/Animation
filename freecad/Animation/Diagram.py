@@ -2,10 +2,9 @@
 # SPDX-FileCopyrightText: 2015 microelly
 # SPDX-FileNotice: Part of the Animation addon.
 
-from say import *
+from .say import *
 import math
-
-from EditWidget import EditWidget
+from .Resources import asIcon
 
 __vers__= '0.2'
 __dir__ = os.path.dirname(__file__)
@@ -279,8 +278,8 @@ class _ViewProviderDiagram(Animation._ViewProviderActor):
         self.Object.Proxy.Lock=False
         self.Object.Proxy.Changed=False
         _creategraphs(self.Object)
-        icon='/icons/diagram.png'
-        self.iconpath = __dir__ + icon
+        icon='diagram'
+        self.iconpath = asIcon(icon)
         self.vers=__vers__
         return
 
@@ -293,13 +292,13 @@ class _ViewProviderDiagram(Animation._ViewProviderActor):
 
 if __name__ == '__main__':
 
-    from Diagram import *
+    from .Diagram import *
 
     App.setActiveDocument("Unnamed")
     App.ActiveDocument=App.getDocument("Unnamed")
     Gui.ActiveDocument=Gui.getDocument("Unnamed")
-    import Animation
-    Animation.createManager()
+    from .Animation import createManager
+    createManager()
 
     App.ActiveDocument.addObject("Part::Box","Box")
     App.ActiveDocument.addObject("Part::Box","Box")
@@ -308,21 +307,21 @@ if __name__ == '__main__':
     App.ActiveDocument.addObject("Part::Cone","Cone")
 
 
-    import Placer
+    from .Placer import createPlacer
 
-    s1=Placer.createPlacer("B1")
+    s1=createPlacer("B1")
     s1.target=App.ActiveDocument.Box001
 
-    s2=Placer.createPlacer("B2")
+    s2=createPlacer("B2")
     s2.target=App.ActiveDocument.Box002
     s2.y="10"
 
-    s3=Placer.createPlacer("B3")
+    s3=createPlacer("B3")
     s3.target=App.ActiveDocument.Box003
     s3.y="20"
 
-    import Diagram
-    c=Diagram.createDiagram("dia","0.200*time","0.2*(0.01*time-0.5)**2","10+time+1","-10*time")
+    from .Diagram import createDiagram
+    c=createDiagram("dia","0.200*time","0.2*(0.01*time-0.5)**2","10+time+1","-10*time")
     c.source=s1
     c.trafo="source.Placement.Rotation.Angle*100"
     c.timeExpression="source.time*10000"

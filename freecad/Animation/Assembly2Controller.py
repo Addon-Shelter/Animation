@@ -2,8 +2,9 @@
 # SPDX-FileNotice: Part of the Animation addon.
 
 import FreeCAD
-import Animation
-from Animation import say,sayErr,sayexc
+import freecad.Animation.Animation as Animation
+from .Animation import say,sayErr,sayexc
+from .Resources import asIcon
 
 
 import os
@@ -47,7 +48,7 @@ class _Assembly2Controller(Animation._Actor):
 class _ViewProviderAssembly2Controller(Animation._ViewProviderActor):
 
     def getIcon(self):
-        return __dir__ + '/icons/assembly2SolveConstraints.svg'
+        return asIcon('assembly2SolveConstraints')
 
 def createAssembly2Controller(name='Assembly2'):
     ''' createToucher(name,target,targets=None) returns an animation node for one target or a list of targets

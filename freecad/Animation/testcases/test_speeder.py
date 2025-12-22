@@ -7,8 +7,8 @@
 #
 #
 
-import Animation
-from Animation import *
+import freecad.Animation.Animation as Animation
+from freecad.Animation.Animation import *
 reload(Animation)
 
 import Placer

@@ -8,7 +8,7 @@ def isequal(a,b):
     return abs(a-b)<1e-6
 
 
-from Animation import *
+from freecad.Animation.Animation import *
 
 App.newDocument("Unbenannt")
 b=App.activeDocument().addObject("Part::Box","Box")

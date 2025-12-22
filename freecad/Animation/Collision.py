@@ -3,7 +3,8 @@
 
 import FreeCAD
 
-from say import *
+from .say import *
+from .Resources import asIcon
 
 __dir__ = os.path.dirname(__file__)
 
@@ -44,7 +45,7 @@ class _ViewProvider(object):
 
     def getIcon(self):
 
-        return  __dir__ + '/icons/collider.png'
+        return  asIcon('collider')
 
     def __init__(self,vobj):
         vobj.Proxy = self

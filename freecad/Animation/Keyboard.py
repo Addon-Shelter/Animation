@@ -7,13 +7,15 @@ from PySide import QtCore, QtGui, QtSvg
 from PySide.QtGui import *
 import Part
 
-from  EditWidget import EditNoDialWidget
+from freecad.Animation.EditWidget import EditNoDialWidget
 
 
 import math,os
 
-import FreeCAD, Animation, PySide
-from Animation import say,sayErr,sayexc
+import FreeCAD, PySide
+import freecad.Animation.Animation as Animation
+from freecad.Animation.Animation import say,sayErr,sayexc
+from .Resources import asIcon
 
 __vers__='0.1 5.12.2015'
 __dir__ = os.path.dirname(__file__)
@@ -178,7 +180,7 @@ class _Keyboard(Animation._Actor):
 class _ViewProviderKeyboard(Animation._ViewProviderActor):
 
     def getIcon(self):
-        return __dir__ +'/icons/icon1.svg'
+        return asIcon('icon1')
 
     def attach(self,vobj):
         self.emenu=[["start",self.start],["stop",self.stop]]

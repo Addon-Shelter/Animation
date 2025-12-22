@@ -12,20 +12,18 @@ import FreeCADGui
 import PySide
 from PySide import QtGui
 import os
+from .Resources import asIcon
+import freecad.Animation.Animation as Animation
 
-import Animation
-global __dir__
-__dir__ = os.path.dirname(Animation.__file__)
-
-
+from FreeCAD import Console
 
 class _CommandActor():
 
-    def __init__(self,name='Actor',icon='/icons/icon3.svg',command='',modul=''):
+    def __init__(self,name='Actor',icon='icon3',command='',modul=''):
 #        say("create Actor Command")
 #        say(name)
         self.name=name
-        self.icon=  __dir__+ icon
+        self.icon = asIcon(icon)
         self.command=command
         self.modul=modul
 #        say(self.icon)
@@ -48,67 +46,62 @@ class _CommandActor():
                     modul=self.modul
                 else:
                     modul=self.name
-                FreeCADGui.doCommand("import " + modul)
+                FreeCADGui.doCommand("import freecad.Animation." + modul)
                 #FreeCADGui.doCommand("reload(" + modul +")")
                 FreeCADGui.doCommand(self.command)
             else:
-                FreeCADGui.doCommand("import Animation")
-                FreeCADGui.doCommand("Animation.create"+self.name+"()")
+                FreeCADGui.doCommand("import freecad.Animation.Animation")
+                FreeCADGui.doCommand("freecad.Animation.Animation.create"+self.name+"()")
             FreeCAD.ActiveDocument.commitTransaction()
             FreeCAD.ActiveDocument.recompute()
         else:
-            Msg("Erst Arbeitsbereich oeffnen")
+            print("Erst Arbeitsbereich oeffnen")
         return
 
 
 if FreeCAD.GuiUp:
 
-    FreeCADGui.addCommand('Anim_TA',_CommandActor("Interpolator",'/icons/icon1.svg',"Trackreader.runTA()","Trackreader"))
-    FreeCADGui.addCommand('Anim_TB',_CommandActor("Fourier",'/icons/icon2.svg',"Trackreader.runTB()","Trackreader"))
-    FreeCADGui.addCommand('Anim_TC',_CommandActor("Noise",'/icons/icon3.svg',"Trackreader.runTC()","Trackreader"))
+    FreeCADGui.addCommand('Anim_TA',_CommandActor("Interpolator",'icon1',"freecad.Animation.Trackreader.runTA()","Trackreader"))
 
 
-    FreeCADGui.addCommand('Anim_Abroller',_CommandActor("Abroller",'/icons/abroller.png','Abroller.createAbroller()'))
-    FreeCADGui.addCommand('Anim_Adjuster',_CommandActor('Adjuster','/icons/adjuster.png'))
-    FreeCADGui.addCommand('Anim_Assembly2Controller',_CommandActor("Assembly2Controller",'/icons/assembly2SolveConstraints.svg',"Assembly2Controller.createAssembly2Controller()"))
-    FreeCADGui.addCommand('Anim_Billboard',_CommandActor('Billboard', '/icons/billboard.png'))
-    FreeCADGui.addCommand('Anim_Bounder',_CommandActor("Bounder",'/icons/bounder.png'))
-    FreeCADGui.addCommand('Anim_Collider',_CommandActor("Collision",'/icons/collider.png',"Collision.createCollision()"))
-    FreeCADGui.addCommand('Anim_Combiner',_CommandActor("Combiner",'/icons/combiner.png',"Combiner.createCombiner()"))
-    FreeCADGui.addCommand('Anim_Connector',_CommandActor('Connector','/icons/scaler.png'))
-    FreeCADGui.addCommand('Anim_ControlPanel',_CommandActor("AnimationControlPanel",'/icons/controlpanel.png',"AnimationControlPanel.createAnimationControlPanel()"))
-    FreeCADGui.addCommand('Anim_Delta',_CommandActor("Delta",'/icons/delta.png'))
-    FreeCADGui.addCommand('Anim_Diagram',_CommandActor("Diagram",'/icons/diagram.png',"Diagram.createDiagram()"))
-    FreeCADGui.addCommand('Anim_Extruder',_CommandActor('Extruder','/icons/extruder.png'))
-    FreeCADGui.addCommand('Anim_Filler',_CommandActor('Filler','/icons/filler.png'))
-    FreeCADGui.addCommand('Anim_Gearing',_CommandActor('Gearing','/icons/gearing.png','Gearing.createGearing()'))
-    FreeCADGui.addCommand('Anim_Kartan',_CommandActor('Kartan','/icons/kardan.png','Kartan.createKartan()'))
-    FreeCADGui.addCommand('Anim_Manager',_CommandActor('Manager','/icons/manager.png'))
-    FreeCADGui.addCommand('Anim_Mover',_CommandActor('Mover','/icons/mover.png'))
-    FreeCADGui.addCommand('Anim_Moviescreen',_CommandActor('Moviescreen', '/icons/moviescreen.png'))
-    FreeCADGui.addCommand('Anim_Pather',_CommandActor("Pather",'/icons/pather.png','Pather.createPather()'))
-    FreeCADGui.addCommand('Anim_Photographer',_CommandActor('Photographer','/icons/photographer.png'))
-    FreeCADGui.addCommand('Anim_Placer',_CommandActor("Placer",'/icons/placer.png',"Placer.createPlacer()"))
-    FreeCADGui.addCommand('Anim_Plugger',_CommandActor('Plugger','/icons/plugger.png'))
-    FreeCADGui.addCommand('Anim_Rotator',_CommandActor('Rotator','/icons/rotator.png'))
-    FreeCADGui.addCommand('Anim_Scaler',_CommandActor('Scaler','/icons/scaler.png','Scaler.createScaler()'))
-    FreeCADGui.addCommand('Anim_Snapshot',_CommandActor("Snapshot",'/icons/snapshot.png',"Snapshot.createSnapshot()","Snapshot"))
-    FreeCADGui.addCommand('Anim_Speeder',_CommandActor("Speeder",'/icons/speeder.png',"Speeder.createSpeeder()"))
-    FreeCADGui.addCommand('Anim_Styler',_CommandActor('Styler', '/icons/styler.png'))
-    FreeCADGui.addCommand('Anim_Sum',_CommandActor("Sum",'/icons/sum.png'))
-    FreeCADGui.addCommand('Anim_Toucher',_CommandActor("Toucher",'/icons/toucher.png',"Toucher.createToucher()"))
-    FreeCADGui.addCommand('Anim_Tracker',_CommandActor("Tracker",'/icons/tracker.png',"Tracker.createTracker()"))
-    FreeCADGui.addCommand('Anim_Trackreader',_CommandActor("Trackreader",'/icons/trackreader.png',"Trackreader.createTrackreader()"))
-    FreeCADGui.addCommand('Anim_Tranquillizer',_CommandActor('Tranquillizer','/icons/tranq.png'))
-    FreeCADGui.addCommand('Anim_Viewpoint',_CommandActor('Viewpoint','/icons/viewpoint.png'))
-    FreeCADGui.addCommand('Anim_ViewSequence',_CommandActor("ViewSequence",'/icons/snapshotviewer.png',"Snapshot.createViewSequence()","Snapshot"))
+    FreeCADGui.addCommand('Anim_Abroller',_CommandActor("Abroller",'abroller','freecad.Animation.Abroller.createAbroller()'))
+    FreeCADGui.addCommand('Anim_Adjuster',_CommandActor('Adjuster','adjuster'))
+    FreeCADGui.addCommand('Anim_Assembly2Controller',_CommandActor("Assembly2Controller",'assembly2SolveConstraints',"freecad.Animation.Assembly2Controller.createAssembly2Controller()"))
+    FreeCADGui.addCommand('Anim_Billboard',_CommandActor('Billboard', 'billboard'))
+    FreeCADGui.addCommand('Anim_Bounder',_CommandActor("Bounder",'bounder'))
+    FreeCADGui.addCommand('Anim_Collider',_CommandActor("Collision",'collider',"freecad.Animation.Collision.createCollision()"))
+    FreeCADGui.addCommand('Anim_Combiner',_CommandActor("Combiner",'combiner',"freecad.Animation.Combiner.createCombiner()"))
+    FreeCADGui.addCommand('Anim_ControlPanel',_CommandActor("AnimationControlPanel",'controlpanel',"freecad.Animation.AnimationControlPanel.createAnimationControlPanel()"))
+    FreeCADGui.addCommand('Anim_Diagram',_CommandActor("Diagram",'diagram',"freecad.Animation.Diagram.createDiagram()"))
+    FreeCADGui.addCommand('Anim_Extruder',_CommandActor('Extruder','extruder'))
+    FreeCADGui.addCommand('Anim_Filler',_CommandActor('Filler','filler'))
+    FreeCADGui.addCommand('Anim_Gearing',_CommandActor('Gearing','gearing','freecad.Animation.Gearing.createGearing()'))
+    FreeCADGui.addCommand('Anim_Kartan',_CommandActor('Kartan','kardan','freecad.Animation.Kartan.createKartan()'))
+    FreeCADGui.addCommand('Anim_Manager',_CommandActor('Manager','manager'))
+    FreeCADGui.addCommand('Anim_Mover',_CommandActor('Mover','mover'))
+    FreeCADGui.addCommand('Anim_Moviescreen',_CommandActor('Moviescreen', 'moviescreen'))
+    FreeCADGui.addCommand('Anim_Pather',_CommandActor("Pather",'pather','freecad.Animation.Pather.createPather()'))
+    FreeCADGui.addCommand('Anim_Photographer',_CommandActor('Photographer','photographer'))
+    FreeCADGui.addCommand('Anim_Placer',_CommandActor("Placer",'placer',"freecad.Animation.Placer.createPlacer()"))
+    FreeCADGui.addCommand('Anim_Plugger',_CommandActor('Plugger','plugger'))
+    FreeCADGui.addCommand('Anim_Rotator',_CommandActor('Rotator','rotator'))
+    FreeCADGui.addCommand('Anim_Scaler',_CommandActor('Scaler','scaler','freecad.Animation.Scaler.createScaler()'))
+    FreeCADGui.addCommand('Anim_Snapshot',_CommandActor("Snapshot",'snapshot',"freecad.Animation.Snapshot.createSnapshot()","Snapshot"))
+    FreeCADGui.addCommand('Anim_Speeder',_CommandActor("Speeder",'speeder',"freecad.Animation.Speeder.createSpeeder()"))
+    FreeCADGui.addCommand('Anim_Styler',_CommandActor('Styler', 'styler'))
+    FreeCADGui.addCommand('Anim_Toucher',_CommandActor("Toucher",'toucher',"freecad.Animation.Toucher.createToucher()"))
+    FreeCADGui.addCommand('Anim_Tracker',_CommandActor("Tracker",'tracker',"freecad.Animation.Tracker.createTracker()"))
+    FreeCADGui.addCommand('Anim_Trackreader',_CommandActor("Trackreader",'trackreader',"freecad.Animation.Trackreader.createTrackReader()"))
+    FreeCADGui.addCommand('Anim_Tranquillizer',_CommandActor('Tranquillizer','tranq'))
+    FreeCADGui.addCommand('Anim_Viewpoint',_CommandActor('Viewpoint','viewpoint'))
+    FreeCADGui.addCommand('Anim_ViewSequence',_CommandActor("ViewSequence",'snapshotviewer',"freecad.Animation.Snapshot.createViewSequence()","Snapshot"))
 #------------------
 #------------------
 
 global _Command
 class _Command():
 
-    def __init__(self,lib=None,name=None,icon='/../icons/nurbs.svg',command=None,modul='nurbswb'):
+    def __init__(self,lib=None,name=None,icon='nurbs',command=None,modul='nurbswb'):
 
         if lib==None: lmod=modul
         else: lmod=modul+'.'+lib
@@ -118,7 +111,7 @@ class _Command():
         self.lmod=lmod
         self.command=command
         self.modul=modul
-        self.icon=  __dir__+ icon
+        self.icon= asIcon(icon)
 
         if name==None: name=command
         self.name=name
@@ -140,8 +133,8 @@ class _Command():
         if self.command != '':
             if self.modul !='': modul=self.modul
             else: modul=self.name
-            FreeCADGui.doCommand("import " + modul)
-            FreeCADGui.doCommand("import "+self.lmod)
+            FreeCADGui.doCommand("import freecad.Animation." + modul)
+            FreeCADGui.doCommand("import freecad.Animation."+self.lmod)
             #FreeCADGui.doCommand("reload("+self.lmod+")")
             FreeCADGui.doCommand(self.command)
         #FreeCAD.ActiveDocument.commitTransaction()
@@ -226,9 +219,9 @@ def c2a(menu,isactive,title,name,*info):
 
 if FreeCAD.GuiUp:
 
-    c2a(["Compounds"],ondocument,'createCompound',"compounds","create Compound of a Selection ",'/icons/comp_create.svg',"create()","animationwb")
-    c2a(["Compounds"],ondocument,'addCompound',"compounds","add Selection to Compound",'/icons/comp_add.svg',"add()","animationwb")
-    c2a(["Compounds"],ondocument,'deleteCompound',"compounds","delete Selection from Compound",'/icons/comp_delete.svg',"delete()","animationwb")
+    c2a(["Compounds"],ondocument,'createCompound',"compounds","create Compound of a Selection ",'comp_create',"create()","freecad.Animation.animationwb")
+    c2a(["Compounds"],ondocument,'addCompound',"compounds","add Selection to Compound",'comp_add',"add()","freecad.Animation.animationwb")
+    c2a(["Compounds"],ondocument,'deleteCompound',"compounds","delete Selection from Compound",'comp_delete',"delete()","freecad.Animation.animationwb")
 
 
 
@@ -237,10 +230,10 @@ if FreeCAD.GuiUp:
 
 
 
+from FreeCAD import Gui
 
 
-
-class AnimationWorkbench(Workbench):
+class AnimationWorkbench(Gui.Workbench):
     '''Animation workbench object'''
 
     Icon = """
@@ -389,16 +382,13 @@ static char * animation_xpm[] = {
     ToolTip = "Animation workbench"
 
     def Initialize(self):
-#        import Animation
-#        import Scaler
+#        import freecad.Animation.Animation as Animation#        import Scaler
 
         Gui.activateWorkbench("DraftWorkbench")
         Gui.activateWorkbench("SketcherWorkbench")
 
         self.functiontools=[
                 "Anim_TA",
-                "Anim_TB",
-                "Anim_TC",
                 'Draft_ToggleGrid',
         ]
 
@@ -450,12 +440,10 @@ static char * animation_xpm[] = {
 
 
 'Anim_Abroller',
-'Anim_Delta',
 'Anim_Sum',
 
 
 'Anim_Assembly2Controller',
-'Anim_Connector',
 
 
 
@@ -499,13 +487,13 @@ static char * animation_xpm[] = {
 
 
 
-        Log ('Loading Animation Workbench ... done\n')
+        print ('Loading Animation Workbench ... done\n')
 
     def Activated(self):
-        Msg("Animation workbench activated\n")
+        print("Animation workbench activated\n")
 
     def Deactivated(self):
-        Msg("Animation workbench deactivated\n")
+        print("Animation workbench deactivated\n")
 
     def ContextMenu(self, recipient):
 #      self.appendContextMenu("Animation tools",self.animtools)
@@ -518,16 +506,4 @@ static char * animation_xpm[] = {
         return "Gui::PythonWorkbench"
 
 
-
-
-
-
-
-
 FreeCADGui.addWorkbench(AnimationWorkbench)
-
-
-
-
-
-

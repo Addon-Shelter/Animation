@@ -6,6 +6,7 @@
 import FreeCAD,PySide,os,FreeCADGui
 from PySide import QtCore, QtGui, QtSvg
 from PySide.QtGui import *
+from .Resources import asIcon
 
 __vers__='0.1'
 
@@ -190,7 +191,7 @@ class _AnimPlacement():
 class _ViewProviderAnimPlacement(object):
 
     def getIcon(self):
-        return __dir__ +'/icons/sun.png'
+        return asIcon('sun')
 
     def __init__(self,vobj):
         say("__init__" + str(self))

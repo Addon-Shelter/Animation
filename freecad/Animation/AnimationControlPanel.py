@@ -4,11 +4,12 @@
 
 import math,os, time
 
-import FreeCAD, FreeCADGui, Animation, PySide
-from Animation import say,sayErr,sayexc
-from EditWidget import EditWidget
+import FreeCAD, FreeCADGui, PySide
+import freecad.Animation.Animation as Animation
+from .Animation import say,sayErr,sayexc
+from .EditWidget import EditWidget
 from PySide import QtCore, QtGui
-
+from .Resources import asIcon
 
 __vers__= '0.1'
 __dir__ = os.path.dirname(__file__)
@@ -97,8 +98,8 @@ class _ViewProviderAnimationControlPanel(Animation._ViewProviderActor):
         self.obj2=self.Object
         self.Object.Proxy.Lock=False
         self.Object.Proxy.Changed=False
-        icon='/icons/controlpanel.png'
-        self.iconpath = __dir__ + icon
+        icon='controlpanel'
+        self.iconpath = asIcon(icon)
         self.vers=__vers__
         return
 

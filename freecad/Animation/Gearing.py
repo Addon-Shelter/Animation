@@ -6,9 +6,9 @@ import math,os
 import numpy
 from numpy import pi,cos,tan,arctan
 
-import FreeCAD, FreeCADGui, Animation, PySide
-from Animation import say,sayErr,sayexc
-from  EditWidget import EditWidget
+import FreeCAD
+from .Animation import say,sayErr,sayexc
+from .Resources import asIcon
 
 __vers__= '0.2'
 __dir__ = os.path.dirname(__file__)
@@ -85,7 +85,9 @@ def rotstep(s,day):
     say(an*180/math.pi)
 
 
-class _Gearing(Animation._Actor):
+from .Animation import _Actor , sayd , errorDialog
+
+class _Gearing(_Actor):
 
     def __init__(self,obj):
         obj.Proxy = self
@@ -227,10 +229,12 @@ class _Gearing(Animation._Actor):
 
 
 
-class _ViewProviderGearing(Animation._ViewProviderActor):
+from .Animation import _ViewProviderActor
+
+class _ViewProviderGearing(_ViewProviderActor):
 
     def getIcon(self):
-        return __dir__ + '/icons/gearing.png'
+        return asIcon('gearing')
 
 
 

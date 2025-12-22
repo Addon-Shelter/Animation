@@ -6,15 +6,17 @@ import FreeCAD,PySide,os,FreeCADGui
 from PySide import QtCore, QtGui, QtSvg
 from PySide.QtGui import *
 import Part
+from .Resources import asIcon
 
 #----------
 
 
 import math,os
 
-import FreeCAD, Animation, PySide
-from Animation import say,sayErr,sayexc
-from  EditWidget import EditNoDialWidget
+import FreeCAD, PySide
+import freecad.Animation.Animation as Animation
+from freecad.Animation.Animation import say,sayErr,sayexc
+from freecad.Animation.EditWidget import EditNoDialWidget
 
 __vers__='0.3 30.11.2015'
 __dir__ = os.path.dirname(__file__)
@@ -55,7 +57,7 @@ class _Tracker(Animation._Actor):
 class _ViewProviderTracker(Animation._ViewProviderActor):
 
     def getIcon(self):
-        return __dir__ +'/icons/icon2.svg'
+        return asIcon('icon2')
 
     def attach(self,vobj):
         self.emenu=[["Show Path",self.showpath]]

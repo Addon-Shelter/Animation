@@ -26,7 +26,7 @@ __dir__ = os.path.dirname(__file__)
 
 import say
 reload(say)
-from say import *
+from .say import *
 
 import reconstruction
 reload (reconstruction.projectiontools)
@@ -35,8 +35,7 @@ from reconstruction.projectiontools import *
 import reconstruction.miki as miki
 reload(miki)
 
-import Animation
-
+import freecad.Animation.Animation as Animation
 class _MPL(Animation._Actor):
 
     def __init__(self,obj):
@@ -129,7 +128,7 @@ class _ViewProviderMPL(Animation._ViewProviderActor):
 
 
     def getIcon(self):
-        return  __dir__+ '/icons/icon1.svg'
+        return  __dir__+ 'icon1')
 
 
     def createDialog(self):
@@ -380,7 +379,7 @@ def createMPL(base=False):
 
     if not base:
         _MPL(obj)
-        #_ViewProviderMPL(obj.ViewObject,__dir__+ '/icons/icon1.svg')
+        #_ViewProviderMPL(obj.ViewObject,__dir__+ 'icon1'))
 
         obj.countSources=1
 

@@ -10,8 +10,7 @@ App.ActiveDocument=App.getDocument("Unnamed")
 b=App.ActiveDocument.addObject("Part::Box","Box")
 
 c=Draft.clone(b)
-import Animation
-
+import freecad.Animation.Animation as Animation
 
 m=Animation.createManager("Skaler Manager")
 

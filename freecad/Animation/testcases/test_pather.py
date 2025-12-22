@@ -3,7 +3,9 @@
 
 # pather testcase
 
-import Animation,Draft, Pather, Placer
+import Draft, Pather, Placer
+
+import freecad.Animation.Animation as Animation
 
 box=App.ActiveDocument.addObject("Part::Box","Box")
 points=[FreeCAD.Vector(22.0,6.0,0.0),

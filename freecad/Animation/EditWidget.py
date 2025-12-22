@@ -3,7 +3,7 @@
 # SPDX-FileNotice: Part of the Animation addon.
 
 from PySide import QtCore, QtGui
-from say import *
+from .say import *
 
 class _EditWidget(QtGui.QWidget):
     '''double clicked dialog'''

@@ -1,7 +1,9 @@
 import math,os
-import FreeCAD, FreeCADGui, Animation, PySide
-from Animation import say,sayErr,sayexc,sayd
-from  EditWidget import EditWidget
+import FreeCAD, FreeCADGui, PySide
+import freecad.Animation.Animation as Animation
+from freecad.Animation.Animation import say,sayErr,sayexc,sayd
+from freecad.Animation.EditWidget import EditWidget
+from .Resources import asIcon
 
 __vers__= '0.1'
 __dir__ = os.path.dirname(__file__)
@@ -75,4 +77,4 @@ class _Scaler(Animation._Actor):
 class _ViewProviderScaler(Animation._ViewProviderActor):
 
     def getIcon(self):
-        return __dir__ + '/icons/scaler.png'
+        return asIcon('scaler')
