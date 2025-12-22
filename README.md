@@ -1,40 +1,24 @@
-#Animation Toolkit for FreeCAD
 
-This Workbench can be used to create sequences of pictures.
+<div align = 'center' >
 
-It is still under construction - all contributions welcomed ..
+# Animation <br/> Workbench
 
-#Linux Installation Instructions
+Create image sequences from objects.
 
-To use this workbench clone this git repository under your FreeCAD MyScripts directory. On a Linux Debian based system such as Ubuntu, installation can be done through BASH as follows
+<br/>
 
-$ mkdir ~/.FreeCAD/Mod
+[![Button-Installation]][Installation]
 
-$ cd ~/.FreeCAD/Mod
+</div>
 
-$ git clone https://github.com/microelly2/Animation.git
+<br/>
 
-Once installed, use git to easily update to the latest version:
+>   [!IMPORTANT]  
+>   This addon was never finished & is currently   
+>   only maintained, not actively developed.
 
-$ cd ~/.FreeCAD/Mod/Animation
 
-$ git pull
+[Button-Installation]: https://img.shields.io/badge/Installation-d45558?style=for-the-badge&logoColor=white&logo=actix
 
-#Windows Installation Instructions
-
-Tested with 0.16.5005 Development Snapshot on a Windows 7 64bit-System (thanks BPLRFE )
-
-- download the git repository as ZIP
-- assuming FreeCAD is installed in "C:\PortableApps\FreeCAD 0_16", go to "C:\PortableApps\FreeCAD 0_16\Mod" within Windows Explorer
-- create new directory named "Animation"
-- unzip downloaded repository in "C:\PortableApps\FreeCAD 0_16\Mod\Animation"
-
-Within FreeCAD you will now have a new workbench-entry called "Animation".
-
-#Mac Installation Instructions
-
-Copy or unzip the drawing dimensioning folder to the directory FreeCAD.app/Contents/Mod
-
-where FreeCAD.app is the folder where FreeCAD is installed.
-
+[Installation]: https://github.com/Wazzards/Installation
 
